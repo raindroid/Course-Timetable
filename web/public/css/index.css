@@ -1,0 +1,16 @@
+.nav {
+    background: cyan;
+}
+
+.light-text {
+    color: aliceblue;
+}
+
+.light-text:hover {
+    color: antiquewhite;
+}
+
+.border {
+    border: red 1px solid;
+    background: yellow;
+}
