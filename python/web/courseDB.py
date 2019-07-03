@@ -30,6 +30,9 @@ class CourseDB():
             data = {header[i]: d[i] for i in range(len(header))}
             self.__mydb[col_name].insert_one(data)
 
+    def drop_col(self, col_name: str):
+        self.__mydb[col_name].drop()
+
 
 if __name__=='__main__':
     db = CourseDB('course')
