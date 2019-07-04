@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4c552698-4d98-4a60-807c-d924f2d54281" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/web/artsci_course_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/artsci_course_finder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/eng_course_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/eng_course_finder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/timetableparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/timetableparser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,19 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/timetableparser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-              <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
-              <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
-              <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
+            <state>
+              <caret lean-forward="true" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -38,10 +27,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/eng_course_finder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+            <state relative-caret-position="17">
+              <caret line="1" column="23" lean-forward="true" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -49,8 +47,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/artsci_course_finder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            <state relative-caret-position="372">
+              <caret line="119" selection-start-line="119" selection-end-line="119" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -119,10 +120,10 @@
         <option value="$PROJECT_DIR$/web/test.py" />
         <option value="$PROJECT_DIR$/eng_course_finder.py" />
         <option value="$PROJECT_DIR$/web/courseDB.py" />
-        <option value="$PROJECT_DIR$/web/utils.py" />
-        <option value="$PROJECT_DIR$/web/timetableparser.py" />
-        <option value="$PROJECT_DIR$/web/artsci_course_finder.py" />
         <option value="$PROJECT_DIR$/web/eng_course_finder.py" />
+        <option value="$PROJECT_DIR$/web/timetableparser.py" />
+        <option value="$PROJECT_DIR$/web/utils.py" />
+        <option value="$PROJECT_DIR$/web/artsci_course_finder.py" />
       </list>
     </option>
   </component>
@@ -315,7 +316,7 @@
       <workItem from="1561560403235" duration="7954000" />
       <workItem from="1562123162026" duration="9359000" />
       <workItem from="1562184364177" duration="5795000" />
-      <workItem from="1562209359379" duration="9739000" />
+      <workItem from="1562209359379" duration="10360000" />
     </task>
     <servers />
   </component>
@@ -325,7 +326,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32847000" />
+    <option name="totallyTimeSpent" value="33468000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -345,7 +346,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.43412527" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37149027" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39978448" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -369,11 +370,11 @@
     <option name="version" value="1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/python$artsci_course_finder.coverage" NAME="artsci_course_finder Coverage Results" MODIFIED="1562217619299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
+    <SUITE FILE_PATH="coverage/python$artsci_course_finder.coverage" NAME="artsci_course_finder Coverage Results" MODIFIED="1562219937222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
     <SUITE FILE_PATH="coverage/python$test.coverage" NAME="test Coverage Results" MODIFIED="1562130423276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
     <SUITE FILE_PATH="coverage/python$Doctest_parse_day.coverage" NAME="Doctest parse_day Coverage Results" MODIFIED="1562217493157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
     <SUITE FILE_PATH="coverage/python$courseDB.coverage" NAME="courseDB Coverage Results" MODIFIED="1561565832848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
-    <SUITE FILE_PATH="coverage/python$timetable_parser.coverage" NAME="timetable-parser Coverage Results" MODIFIED="1562219371968" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
+    <SUITE FILE_PATH="coverage/python$timetable_parser.coverage" NAME="timetable-parser Coverage Results" MODIFIED="1562219942426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/web/__init__.py">
@@ -402,13 +403,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/artsci_course_finder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/courseDB.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11">
@@ -419,17 +413,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/eng_course_finder.py">
+    <entry file="file://$PROJECT_DIR$/web/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+        <state relative-caret-position="51">
+          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/utils.py">
+    <entry file="file://$PROJECT_DIR$/web/eng_course_finder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
+        <state relative-caret-position="17">
+          <caret line="1" column="23" lean-forward="true" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/artsci_course_finder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="119" selection-start-line="119" selection-end-line="119" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -438,10 +439,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/timetableparser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
-          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+        <state>
+          <caret lean-forward="true" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

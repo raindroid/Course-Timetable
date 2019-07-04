@@ -99,9 +99,13 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
             # set up single meeting
             meeting_all = []
             for meeting_raw in meeting_data['schedule'].values():
-                meeting_raw.update({'meetingDay': parse_day(meeting_raw['meetingDay'])})
-                meeting_all.append(meeting_raw)
+
+                if meeting_raw['meetingDay']:
+                    meeting_raw.update({'meetingDay': parse_day(meeting_raw['meetingDay'])})
+                    meeting_all.append(meeting_raw)
             meeting_data.pop('schedule')
+            if not meeting_all:
+                continue
 
             meetings_info.append({'meetingName': meetingName.replace('-', ''),
                                   'meetingType': meeting_data.pop('teachingMethod'),
@@ -109,6 +113,10 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
                                   'detail': meeting_all})
             # other info
             meetings_info[-1].update(meeting_data)
+
+        if not meetings_info:
+            print('This course is not available')
+            return
 
         course_data.update({'meetings': meetings_info})
 
@@ -141,7 +149,8 @@ if __name__ == '__main__':
     # artsci_course_test('../../data/as_course_list.json')
     # get_artsci_course_detail('APM441H1')
     # artsci_course_detail('CSC108H1')
-    get_artsci_course_detail('PSY202H1', '../../data/samples/PSY202H1.json')
+    # get_artsci_course_detail('PSY202H1', '../../data/samples/PSY202H1.json')
+    get_artsci_course_detail('ACT496H1', '../../data/samples/ACT496H1.json')
     # get_artsci_course_detail('CSC104H1', '../../data/samples/CSC104H1.json', '../../data/samples/CSC104H1-ori.json')
     # db = CourseDB('course')
     # download_artsci_table(db, 'test')

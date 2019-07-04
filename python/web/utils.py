@@ -1,7 +1,7 @@
 import urllib.request
 from typing import List
 import re
-from web.courseDB import CourseDB
+from courseDB import CourseDB
 from bs4 import BeautifulSoup
 from pprint import pprint
 
