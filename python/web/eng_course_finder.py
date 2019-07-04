@@ -1,11 +1,11 @@
 import urllib.request
 from typing import List
 import re
-from web.courseDB import CourseDB
+from courseDB import CourseDB
 from bs4 import BeautifulSoup
 from pprint import pprint
-from web.utils import get_page, change_keys, parse_day
-from web.utils import bcolors
+from utils import get_page, change_keys, parse_day
+from utils import bcolors
 
 def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = True, drop_frist: bool = True) -> str:
     page = get_page(url)

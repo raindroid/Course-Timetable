@@ -5,9 +5,9 @@ from web.courseDB import CourseDB
 from bs4 import BeautifulSoup
 from pprint import pprint, pformat
 import json
-from web.eng_course_finder import *
-from web.artsci_course_finder import *
-from web.utils import bcolors
+from eng_course_finder import *
+from artsci_course_finder import *
+from utils import bcolors
 import time
 
 if __name__ == '__main__':

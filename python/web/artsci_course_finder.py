@@ -1,12 +1,12 @@
 import urllib.request
 from typing import List
 import re
-from web.courseDB import CourseDB
+from courseDB import CourseDB
 from bs4 import BeautifulSoup
 from pprint import pprint, pformat
-from web.utils import get_page, change_keys, parse_day
+from utils import get_page, change_keys, parse_day
 import json
-from web.utils import bcolors
+from utils import bcolors
 
 def get_artsci_course_names(save_file: str = ''):
     if save_file != '':
