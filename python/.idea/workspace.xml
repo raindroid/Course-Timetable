@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c552698-4d98-4a60-807c-d924f2d54281" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/web/artsci_course_finder.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/artsci_course_finder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/timetableparser.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/timetableparser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/utils.py" afterDir="false" />
-    </list>
+    <list default="true" id="4c552698-4d98-4a60-807c-d924f2d54281" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -316,7 +312,7 @@
       <workItem from="1561560403235" duration="7954000" />
       <workItem from="1562123162026" duration="9359000" />
       <workItem from="1562184364177" duration="5795000" />
-      <workItem from="1562209359379" duration="10360000" />
+      <workItem from="1562209359379" duration="10871000" />
     </task>
     <servers />
   </component>
@@ -326,7 +322,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33468000" />
+    <option name="totallyTimeSpent" value="33979000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

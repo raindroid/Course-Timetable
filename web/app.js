@@ -20,8 +20,8 @@ app.get('/api/course', (req, res)=>{
 		res.send([])
 		return 
 	} 
-	
-	courseCode = req.query.code.toUpperCase()
+
+	courseCode = req.query.code.substring(0, 8).toUpperCase()
 	console.log(`Search for ${courseCode}`)
 	
 	MongoClient.connect(dbUrl, {useNewUrlParser: true}, function(err, db) {
@@ -35,6 +35,6 @@ app.get('/api/course', (req, res)=>{
 	}); 
 })
 
-app.listen(3000, 'localhost', ()=>{
+app.listen(3000, '0.0.0.0', ()=>{
     console.log('Server Started')
 })
