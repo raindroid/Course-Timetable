@@ -4,9 +4,10 @@ import re
 from web.courseDB import CourseDB
 from bs4 import BeautifulSoup
 from pprint import pprint
-from web.utils import get_page
+from web.utils import get_page, change_keys, parse_day
+from web.utils import bcolors
 
-def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = False, drop_frist: bool = True) -> str:
+def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = True, drop_frist: bool = True) -> str:
     page = get_page(url)
 
     soup = BeautifulSoup(page, 'html.parser')
@@ -19,8 +20,9 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
     for course_group_html in course_groups_html:
         course_headers = [tag.string for tag in course_group_html.tr.find_all('th')]
         # print(course_headers)
-        for meeting_html in course_group_html.find_all('tr')[1:]:
-            meeting_info = [info.string if info.string != '\xa0' else 'None' for info in meeting_html.find_all('font')]
+        all_courses = course_group_html.find_all('tr')[1:]
+        for index, meeting_html in enumerate(all_courses):
+            meeting_info = [info.string if info.string != '\xa0' else 'NONE' for info in meeting_html.find_all('font')]
 
             course_type = meeting_info[0][-1]
             course_name = meeting_info[0]
@@ -29,18 +31,42 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
                 continue
 
             course_found = False
-
-            meeting = {'meetingName': meeting_info[1], 'meetingType': meeting_info[1][:3]}
-            meeting.update({'detail': [{header: context for header, context in zip(course_headers[2:], meeting_info[2:])}]})
+            detail_raw = {header: context for header, context in zip(course_headers[2:], meeting_info[2:])}
+            detail_info = change_keys(detail_raw, {
+                "START DATE": 'meetingStartDate',
+                "DAY": 'meetingDay',
+                "START": 'meetingStartTime',
+                "FINISH": 'meetingEndTime',
+                "LOCATION": 'meetingLocation',
+                "PROFESSOR(S)": 'instructor',
+                "SCHEDULING NOTES": 'notes'
+            })
+            detail_info.update({'meetingDay': parse_day(detail_info['meetingDay'])})
+            instructor = detail_info.pop('instructor')
+            meeting = {'meetingName': meeting_info[1],
+                       'meetingType': meeting_info[1][:3],
+                       'instructors': [] if instructor == 'NONE' else [instructor],
+                       'detail': [detail_info]}
 
             # check for previous course name
             for previous_course in course_table:
                 if previous_course['courseName'] == meeting_info[0]:
+
                     # check for previous meeting name
                     meeting_found = False
 
                     for previous_meeting in previous_course['meetings']:
                         if previous_meeting['meetingName'] == meeting['meetingName']:
+
+                            # update instructor list
+                            instructor_found = False
+                            for previous_instructor in previous_meeting['instructors']:
+                                if previous_instructor == meeting['instructors'][0]:
+                                    instructor_found = True
+                                    break
+                            if not instructor_found:
+                                previous_meeting['instructors'].extend(meeting['instructors'])
+
                             previous_meeting['detail'].extend(meeting['detail'])
                             meeting_found = True
                             break
@@ -57,8 +83,11 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
                 course_table.append({
                     'courseName': course_name,
                     'courseType': course_type,
-                    'meetings' : [meeting]
+                    'meetings': [meeting]
                 })
+
+            print('[engineering] Download Course Detail - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
+                index + 1, len(all_courses), '.' * int(index * 100 / len(all_courses))) + bcolors.ENDC)
 
     db.insert_many(col_name, course_table)
 
