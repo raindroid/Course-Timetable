@@ -1,0 +1,422 @@
+{
+    "courseName": "PSY202H1S",
+    "courseType": "S",
+    "courseId": "33319",
+    "org": "PSY",
+    "orgName": "Psychology (PSY) (JLP)",
+    "courseTitle": "Statistics II",
+    "code": "PSY202H1",
+    "courseDescription": "Fundamentals of statistical analysis of experimental and observational data including linear models, the analysis of variance, a priori contrasts, post-hoc tests, power analysis and effect size calculations.",
+    "prerequisite": "PSY201H1 (or exclusion)",
+    "corequisite": "",
+    "exclusion": "ECO220Y1/ECO227Y1/STA221H1/SOC252H1/SOC300H1",
+    "recommendedPreparation": "",
+    "section": "S",
+    "session": "20199",
+    "webTimetableInstructions": "",
+    "breadthCategories": "The Physical and Mathematical Universes (5)",
+    "distributionCategories": "Science",
+    "meetings": {
+        "LEC-5101": {
+            "schedule": {
+                "MO-152142": {
+                    "meetingDay": "MO",
+                    "meetingStartTime": "18:00",
+                    "meetingEndTime": "20:00",
+                    "meetingScheduleId": "152142",
+                    "assignedRoom1": null,
+                    "assignedRoom2": null
+                }
+            },
+            "instructors": {
+                "3846768": {
+                    "instructorId": "3846768",
+                    "firstName": "M",
+                    "lastName": "Metz"
+                }
+            },
+            "meetingId": "101937",
+            "teachingMethod": "LEC",
+            "sectionNumber": "5101",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "Y",
+            "online": "",
+            "enrollmentCapacity": "200",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": "P",
+            "meetingStatusNotes": null,
+            "enrollmentControls": [
+                {
+                    "postId": "90",
+                    "postCode": "ASMAJ1160",
+                    "postName": "MA PSYCHOLOGY",
+                    "subjectId": "1",
+                    "subjectCode": "*",
+                    "subjectName": "",
+                    "designationId": "1",
+                    "designationCode": "*",
+                    "designationName": "",
+                    "yearOfStudy": "*",
+                    "typeOfProgramId": "1",
+                    "typeOfProgramCode": "*",
+                    "typeOfProgramName": "All Types",
+                    "primaryOrgId": "1",
+                    "primaryOrgCode": "*",
+                    "primaryOrgName": "",
+                    "secondaryOrgId": "1",
+                    "secondaryOrgCode": "*",
+                    "secondaryOrgName": "",
+                    "assocOrgId": "1",
+                    "assocOrgCode": "*",
+                    "assocOrgName": "",
+                    "adminOrgId": "1",
+                    "adminOrgCode": "*",
+                    "adminOrgName": ""
+                },
+                {
+                    "postId": "193",
+                    "postCode": "ASMIN1160",
+                    "postName": "MI PSYCHOLOGY",
+                    "subjectId": "1",
+                    "subjectCode": "*",
+                    "subjectName": "",
+                    "designationId": "1",
+                    "designationCode": "*",
+                    "designationName": "",
+                    "yearOfStudy": "*",
+                    "typeOfProgramId": "1",
+                    "typeOfProgramCode": "*",
+                    "typeOfProgramName": "All Types",
+                    "primaryOrgId": "1",
+                    "primaryOrgCode": "*",
+                    "primaryOrgName": "",
+                    "secondaryOrgId": "1",
+                    "secondaryOrgCode": "*",
+                    "secondaryOrgName": "",
+                    "assocOrgId": "1",
+                    "assocOrgCode": "*",
+                    "assocOrgName": "",
+                    "adminOrgId": "1",
+                    "adminOrgCode": "*",
+                    "adminOrgName": ""
+                },
+                {
+                    "postId": "287",
+                    "postCode": "ASSPE1160",
+                    "postName": "SP PSYCHOLOGY",
+                    "subjectId": "1",
+                    "subjectCode": "*",
+                    "subjectName": "",
+                    "designationId": "1",
+                    "designationCode": "*",
+                    "designationName": "",
+                    "yearOfStudy": "*",
+                    "typeOfProgramId": "1",
+                    "typeOfProgramCode": "*",
+                    "typeOfProgramName": "All Types",
+                    "primaryOrgId": "1",
+                    "primaryOrgCode": "*",
+                    "primaryOrgName": "",
+                    "secondaryOrgId": "1",
+                    "secondaryOrgCode": "*",
+                    "secondaryOrgName": "",
+                    "assocOrgId": "1",
+                    "assocOrgCode": "*",
+                    "assocOrgName": "",
+                    "adminOrgId": "1",
+                    "adminOrgCode": "*",
+                    "adminOrgName": ""
+                },
+                {
+                    "postId": "353",
+                    "postCode": "ASSPE1958",
+                    "postName": "SP PSYCHOLOGY RESEARCH(THESIS)",
+                    "subjectId": "1",
+                    "subjectCode": "*",
+                    "subjectName": "",
+                    "designationId": "1",
+                    "designationCode": "*",
+                    "designationName": "",
+                    "yearOfStudy": "*",
+                    "typeOfProgramId": "1",
+                    "typeOfProgramCode": "*",
+                    "typeOfProgramName": "All Types",
+                    "primaryOrgId": "1",
+                    "primaryOrgCode": "*",
+                    "primaryOrgName": "",
+                    "secondaryOrgId": "1",
+                    "secondaryOrgCode": "*",
+                    "secondaryOrgName": "",
+                    "assocOrgId": "1",
+                    "assocOrgCode": "*",
+                    "assocOrgName": "",
+                    "adminOrgId": "1",
+                    "adminOrgCode": "*",
+                    "adminOrgName": ""
+                }
+            ]
+        },
+        "TUT-0101": {
+            "schedule": {
+                "TU-158849": {
+                    "meetingDay": "TU",
+                    "meetingStartTime": "09:00",
+                    "meetingEndTime": "10:00",
+                    "meetingScheduleId": "158849",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101938",
+            "teachingMethod": "TUT",
+            "sectionNumber": "0101",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": null,
+            "enrollmentControls": []
+        },
+        "TUT-0201": {
+            "schedule": {
+                "TU-158851": {
+                    "meetingDay": "TU",
+                    "meetingStartTime": "10:00",
+                    "meetingEndTime": "11:00",
+                    "meetingScheduleId": "158851",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101939",
+            "teachingMethod": "TUT",
+            "sectionNumber": "0201",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": null,
+            "enrollmentControls": []
+        },
+        "TUT-0301": {
+            "schedule": {
+                "WE-158852": {
+                    "meetingDay": "WE",
+                    "meetingStartTime": "10:00",
+                    "meetingEndTime": "11:00",
+                    "meetingScheduleId": "158852",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101940",
+            "teachingMethod": "TUT",
+            "sectionNumber": "0301",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": null,
+            "enrollmentControls": []
+        },
+        "TUT-0401": {
+            "schedule": {
+                "WE-158853": {
+                    "meetingDay": "WE",
+                    "meetingStartTime": "11:00",
+                    "meetingEndTime": "12:00",
+                    "meetingScheduleId": "158853",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101941",
+            "teachingMethod": "TUT",
+            "sectionNumber": "0401",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": null,
+            "enrollmentControls": []
+        },
+        "TUT-0501": {
+            "schedule": {
+                "WE-158854": {
+                    "meetingDay": "WE",
+                    "meetingStartTime": "16:00",
+                    "meetingEndTime": "17:00",
+                    "meetingScheduleId": "158854",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101942",
+            "teachingMethod": "TUT",
+            "sectionNumber": "0501",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": null,
+            "enrollmentControls": []
+        },
+        "TUT-0601": {
+            "schedule": {
+                "TH-171062": {
+                    "meetingDay": "TH",
+                    "meetingStartTime": "11:00",
+                    "meetingEndTime": "12:00",
+                    "meetingScheduleId": "171062",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101944",
+            "teachingMethod": "TUT",
+            "sectionNumber": "0601",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": "",
+            "enrollmentControls": []
+        },
+        "TUT-0701": {
+            "schedule": {
+                "TH-171063": {
+                    "meetingDay": "TH",
+                    "meetingStartTime": "12:00",
+                    "meetingEndTime": "13:00",
+                    "meetingScheduleId": "171063",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101945",
+            "teachingMethod": "TUT",
+            "sectionNumber": "0701",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": "",
+            "enrollmentControls": []
+        },
+        "TUT-5101": {
+            "schedule": {
+                "WE-171061": {
+                    "meetingDay": "WE",
+                    "meetingStartTime": "17:00",
+                    "meetingEndTime": "18:00",
+                    "meetingScheduleId": "171061",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101943",
+            "teachingMethod": "TUT",
+            "sectionNumber": "5101",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": "",
+            "enrollmentControls": []
+        },
+        "TUT-5201": {
+            "schedule": {
+                "TH-171060": {
+                    "meetingDay": "TH",
+                    "meetingStartTime": "18:00",
+                    "meetingEndTime": "19:00",
+                    "meetingScheduleId": "171060",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101946",
+            "teachingMethod": "TUT",
+            "sectionNumber": "5201",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": "",
+            "enrollmentControls": []
+        },
+        "TUT-5301": {
+            "schedule": {
+                "TH-171059": {
+                    "meetingDay": "TH",
+                    "meetingStartTime": "19:00",
+                    "meetingEndTime": "20:00",
+                    "meetingScheduleId": "171059",
+                    "assignedRoom1": null,
+                    "assignedRoom2": ""
+                }
+            },
+            "instructors": [],
+            "meetingId": "101947",
+            "teachingMethod": "TUT",
+            "sectionNumber": "5301",
+            "subtitle": "",
+            "cancel": "",
+            "waitlist": "N",
+            "online": "",
+            "enrollmentCapacity": "20",
+            "actualEnrolment": "0",
+            "actualWaitlist": "0",
+            "enrollmentIndicator": null,
+            "meetingStatusNotes": "",
+            "enrollmentControls": []
+        }
+    }
+}

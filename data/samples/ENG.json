@@ -1,0 +1,313 @@
+{
+    "_id": "5d1d237dd32228f9fe5aadec",
+    "courseName": "AER210H1F",
+    "courseType": "F",
+    "meetings": [
+        {
+            "meetingName": "LEC0101",
+            "meetingType": "LEC",
+            "detail": [
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "10:00",
+                    "FINISH": "11:00",
+                    "LOCATION": "SF1105",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/09",
+                    "DAY": "Mon",
+                    "START": "12:00",
+                    "FINISH": "13:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/10",
+                    "DAY": "Tue",
+                    "START": "16:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "LEC0102",
+            "meetingType": "LEC",
+            "detail": [
+                {
+                    "START DATE": "2019/09/09",
+                    "DAY": "Mon",
+                    "START": "11:00",
+                    "FINISH": "12:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/10",
+                    "DAY": "Tue",
+                    "START": "15:00",
+                    "FINISH": "16:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "11:00",
+                    "FINISH": "12:00",
+                    "LOCATION": "SF3202",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "PRA0101",
+            "meetingType": "PRA",
+            "detail": [
+                {
+                    "START DATE": "2019/09/11",
+                    "DAY": "Wed",
+                    "START": "09:00",
+                    "FINISH": "12:00",
+                    "LOCATION": "WB125",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/11",
+                    "DAY": "Wed",
+                    "START": "09:00",
+                    "FINISH": "12:00",
+                    "LOCATION": "MB325",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "PRA0102",
+            "meetingType": "PRA",
+            "detail": [
+                {
+                    "START DATE": "2019/09/18",
+                    "DAY": "Wed",
+                    "START": "09:00",
+                    "FINISH": "12:00",
+                    "LOCATION": "WB125",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/18",
+                    "DAY": "Wed",
+                    "START": "09:00",
+                    "FINISH": "12:00",
+                    "LOCATION": "MB325",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "PRA0103",
+            "meetingType": "PRA",
+            "detail": [
+                {
+                    "START DATE": "2019/09/11",
+                    "DAY": "Wed",
+                    "START": "14:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "WB125",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/11",
+                    "DAY": "Wed",
+                    "START": "14:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "MB325",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "PRA0104",
+            "meetingType": "PRA",
+            "detail": [
+                {
+                    "START DATE": "2019/09/18",
+                    "DAY": "Wed",
+                    "START": "14:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "WB125",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/18",
+                    "DAY": "Wed",
+                    "START": "14:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "MB325",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "TUT0101",
+            "meetingType": "TUT",
+            "detail": [
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "15:00",
+                    "FINISH": "16:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/05",
+                    "DAY": "Thu",
+                    "START": "12:00",
+                    "FINISH": "13:00",
+                    "LOCATION": "BAB024",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "TUT0102",
+            "meetingType": "TUT",
+            "detail": [
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "15:00",
+                    "FINISH": "16:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/05",
+                    "DAY": "Thu",
+                    "START": "12:00",
+                    "FINISH": "13:00",
+                    "LOCATION": "BA2139",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "TUT0103",
+            "meetingType": "TUT",
+            "detail": [
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "15:00",
+                    "FINISH": "16:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/05",
+                    "DAY": "Thu",
+                    "START": "12:00",
+                    "FINISH": "13:00",
+                    "LOCATION": "BA2195",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "TUT0104",
+            "meetingType": "TUT",
+            "detail": [
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "16:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/05",
+                    "DAY": "Thu",
+                    "START": "12:00",
+                    "FINISH": "13:00",
+                    "LOCATION": "HA316",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "TUT0105",
+            "meetingType": "TUT",
+            "detail": [
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "16:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/05",
+                    "DAY": "Thu",
+                    "START": "12:00",
+                    "FINISH": "13:00",
+                    "LOCATION": "BA2165",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        },
+        {
+            "meetingName": "TUT0106",
+            "meetingType": "TUT",
+            "detail": [
+                {
+                    "START DATE": "2019/09/06",
+                    "DAY": "Fri",
+                    "START": "16:00",
+                    "FINISH": "17:00",
+                    "LOCATION": "BA1190",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                },
+                {
+                    "START DATE": "2019/09/05",
+                    "DAY": "Thu",
+                    "START": "12:00",
+                    "FINISH": "13:00",
+                    "LOCATION": "MC252",
+                    "PROFESSOR(S)": "None",
+                    "SCHEDULING NOTES": "None"
+                }
+            ]
+        }
+    ]
+}

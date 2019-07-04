@@ -6,89 +6,61 @@ from bs4 import BeautifulSoup
 from pprint import pprint
 from web.utils import get_page
 
-def download_engineering_table(url: str, db: CourseDB, col_name: str, year_course_col_name: str = '', drop_frist: bool = True) -> str:
+def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = False, drop_frist: bool = True) -> str:
     page = get_page(url)
 
     soup = BeautifulSoup(page, 'html.parser')
     course_groups_html = soup.find_all('table')[1:]
 
     course_table = []
-    year_course_table = []
     if drop_frist:
         db.drop_col(col_name)
-        if year_course_col_name != '':
-            db.drop_col(year_course_col_name)
 
     for course_group_html in course_groups_html:
         course_headers = [tag.string for tag in course_group_html.tr.find_all('th')]
         # print(course_headers)
-        for section_htm in course_group_html.find_all('tr')[1:]:
-            section_info = [info.string if info.string != '\xa0' else 'None' for info in section_htm.find_all('font')]
+        for meeting_html in course_group_html.find_all('tr')[1:]:
+            meeting_info = [info.string if info.string != '\xa0' else 'None' for info in meeting_html.find_all('font')]
+
+            course_type = meeting_info[0][-1]
+            course_name = meeting_info[0]
+
+            if not save_year_course and course_type.capitalize() == 'Y':
+                continue
 
             course_found = False
-            section = {'section_name': section_info[1]}
-            section.update({'detail': [{header: context for header, context in zip(course_headers[2:], section_info[2:])}]})
 
-            if section_info[0][-3:] != 'Y1Y':
+            meeting = {'meetingName': meeting_info[1], 'meetingType': meeting_info[1][:3]}
+            meeting.update({'detail': [{header: context for header, context in zip(course_headers[2:], meeting_info[2:])}]})
 
-                # check for previous course name
-                for previous_course in course_table:
-                    if previous_course['course_name'] == section_info[0]:
-                        # check for previous section name
-                        section_found = False
+            # check for previous course name
+            for previous_course in course_table:
+                if previous_course['courseName'] == meeting_info[0]:
+                    # check for previous meeting name
+                    meeting_found = False
 
-                        for previous_section in previous_course['sections']:
-                            if previous_section['section_name'] == section['section_name']:
-                                previous_section['detail'].append(section['detail'])
-                                section_found = True
-                                break
+                    for previous_meeting in previous_course['meetings']:
+                        if previous_meeting['meetingName'] == meeting['meetingName']:
+                            previous_meeting['detail'].extend(meeting['detail'])
+                            meeting_found = True
+                            break
 
-                        if not section_found:
-                            # no previous section found
-                            previous_course['sections'].append(section)
+                    if not meeting_found:
+                        # no previous meeting found
+                        previous_course['meetings'].append(meeting)
 
-                        course_found = True
-                        break
+                    course_found = True
+                    break
 
-                if not course_found:
-                    # add a new course
-                    course_table.append({
-                        'course_name': section_info[0],
-                        'sections' : [section]
-                    })
-
-            elif year_course_col_name != '':
-                # pprint('Year course found')
-                # check for previous course name [year course]
-                for previous_course in year_course_table:
-                    if previous_course['course_name'] == section_info[0]:
-                        # check for previous section name
-                        section_found = False
-
-                        for previous_section in previous_course['sections']:
-                            if previous_section['section_name'] == section['section_name']:
-                                previous_section['detail'].append(section['detail'])
-                                section_found = True
-                                break
-
-                        if not section_found:
-                            # no previous section found
-                            previous_course['sections'].append(section)
-
-                        course_found = True
-                        break
-
-                if not course_found:
-                    # add a new course
-                    year_course_table.append({
-                        'course_name': section_info[0],
-                        'sections': [section]
-                    })
-
+            if not course_found:
+                # add a new course
+                course_table.append({
+                    'courseName': course_name,
+                    'courseType': course_type,
+                    'meetings' : [meeting]
+                })
 
     db.insert_many(col_name, course_table)
-    if year_course_col_name != '':
-        db.insert_many(year_course_col_name, year_course_table)
 
 
 def download_engineering_table_old(db):

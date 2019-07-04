@@ -33,6 +33,9 @@ class CourseDB():
     def drop_col(self, col_name: str):
         self.__mydb[col_name].drop()
 
+    def find_col(self, col_name: str, data: dict):
+        return self.__mydb[col_name].find(data)
+
 
 if __name__=='__main__':
     db = CourseDB('course')
