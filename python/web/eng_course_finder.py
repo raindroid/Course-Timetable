@@ -7,6 +7,13 @@ from pprint import pprint
 from utils import get_page, change_keys, parse_day
 from utils import bcolors
 
+def download_engineering_course_description(url: str, db: CourseDB, col_name: str):
+    get_page(url)
+
+    soup = BeautifulSoup(page, 'html.parser')
+    course_desc_list = soup.find_all(['tr', 'p'])[22:]
+
+
 def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = True, drop_frist: bool = True) -> str:
     page = get_page(url)
 
@@ -42,7 +49,7 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
                 "SCHEDULING NOTES": 'notes'
             })
             detail_info.update({'meetingDay': parse_day(detail_info['meetingDay'])})
-            instructor = detail_info.pop('instructor')
+            instructor = detail_info['instructor']
             meeting = {'meetingName': meeting_info[1],
                        'meetingType': meeting_info[1][:3],
                        'instructors': [] if instructor == 'NONE' else [instructor],
@@ -128,3 +135,7 @@ def download_engineering_table_old(db):
 
 
     print(len(courses_prefixes))
+
+
+if __name__ == '__main__':
+    download_engineering_course_description('https://portal.engineering.utoronto.ca/sites/calendars/current/Course_Descriptions.html')

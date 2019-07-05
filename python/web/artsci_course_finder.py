@@ -52,9 +52,21 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
               'prof=&breadth=&online=&waitlist=&available=&title='.format(course)
 
     print('API url = {}'.format(url + api_url))
-    data = json.loads(get_page(url + api_url))
+    page = get_page(url + api_url)
+    if not page:
+        # empty page found
+        print('Nothing related to {} found'.format(course))
+        return
+
+    try:
+        data = json.loads(page)
+    except:
+        # page is not a json
+        print('Nothing related to {} found'.format(course))
+        return
+
     if not data:
-        # nothing found
+        # nothing useful found
         print('Nothing related to {} found'.format(course))
         return
 
@@ -80,7 +92,10 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
         course_data.update({'courseType': data[course]["section"]})
 
         # set up the meetings info
-        meetings_data = data[course].pop('meetings')
+        try:
+            meetings_data = data[course].pop('meetings')
+        except:
+            continue
         meetings_info = []
 
         for meetingName, meeting_data in meetings_data.items():
@@ -150,7 +165,7 @@ if __name__ == '__main__':
     # get_artsci_course_detail('APM441H1')
     # artsci_course_detail('CSC108H1')
     # get_artsci_course_detail('PSY202H1', '../../data/samples/PSY202H1.json')
-    get_artsci_course_detail('ACT496H1', '../../data/samples/ACT496H1.json')
+    get_artsci_course_detail('HIS310H1', '../../data/samples/HIS310H1.json')
     # get_artsci_course_detail('CSC104H1', '../../data/samples/CSC104H1.json', '../../data/samples/CSC104H1-ori.json')
     # db = CourseDB('course')
     # download_artsci_table(db, 'test')

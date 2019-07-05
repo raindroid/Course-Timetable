@@ -1,7 +1,6 @@
 import urllib.request
 from typing import List
 import re
-from courseDB import CourseDB
 from bs4 import BeautifulSoup
 from pprint import pprint
 
@@ -15,11 +14,18 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-def get_page(url: str) -> str:
-    response = urllib.request.urlopen(url)
-    html = response.read()  # 获取到页面的源代码
-    page = html.decode('utf-8')
-    return page
+def get_page(url: str, timeOutTimes: int = 20) -> str:
+    while timeOutTimes:
+        timeOutTimes -= 1
+        try:
+            response = urllib.request.urlopen(url)
+            html = response.read()  # 获取到页面的源代码
+            page = html.decode('utf-8')
+
+            return page
+        except:
+            print('Failed to connect ' + url)
+    return ''
 
 def artsci_course_test():
     data_file = open('as-course-list.txt', 'w')
