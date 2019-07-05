@@ -16,12 +16,17 @@ if __name__ == '__main__':
     startTime = time.time()
 
     print('Start downloading course information StartTime:{}'.format(time.asctime( time.localtime(time.time()) )))
-    # update engineering course to the mongodb
+    # update engineering course to the mongodb fall term and year courses
     download_engineering_table("https://portal.engineering.utoronto.ca/sites/timetable/fall.html", db, 'courses',
                                save_year_course=True)
+    # update engineering course to the mongodb winter term
     download_engineering_table("https://portal.engineering.utoronto.ca/sites/timetable/winter.html", db, 'courses',
                                save_year_course=False, drop_frist=False)
+    # update artsci course to the mongodb
     download_artsci_table(db, 'courses', drop_frist=False)
+    # update engineering course detail
+    download_engineering_course_description(
+        'https://portal.engineering.utoronto.ca/sites/calendars/current/Course_Descriptions.html', db, 'courses')
 
     print(bcolors.OKGREEN + 'All download DONE!' + bcolors.ENDC)
 

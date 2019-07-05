@@ -44,7 +44,6 @@ app.get('/api/courses/all', (req, res)=>{
 		// console.log(docs)
 		let courses = []
 		docs.forEach((doc)=>{
-			console.log(doc.courseName)
 			courses.push(doc.courseName)
 		})
 		res.send(courses)

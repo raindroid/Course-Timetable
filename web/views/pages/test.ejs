@@ -15,12 +15,12 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="form-group">
+    <div class="container mt-4">
+        <div class="form-group mt-3">
             <form action="/API/course" id="courseForm" method="GET">
-                <label > Input a course code</label>
-                <input type="text" name="code" id="code" class="form-control" placeholder="Course Code">
-                <small id="helpId" class="text-muted">Help text</small>
+                <label class='ml-2 mt-5'> Input a course code</label>
+                <input type="text" name="code" id="code" class="form-control m-2" placeholder="Course Code">
+                <small id="helpId" class="text-muted ml-2">Help text</small>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
@@ -28,24 +28,6 @@
             <p id="demo"></p>
         </div>
     </div>
-    <script type='text/javascript'>
-        var xhttp = new XMLHttpRequest()
-        /* attach a submit handler to the form */
-        document.getElementById("courseForm").onsubmit = (function(event) {
-    
-            /* stop form from submitting normally */
-            event.preventDefault();
-
-            xhttp.onreadystatechange = ()=>{ 
-                if (xhttp.readyState == 4 && xhttp.status == 200) {
-                    document.getElementById("demo").innerHTML = xhttp.responseText;
-                }
-                console.log(xhttp)
-            }
-            xhttp.open('GET', '/API/courses?code=' + document.getElementById('code').value, true)
-            xhttp.send()
-            console.log('Get url=API/courses?code=' + document.getElementById('code').value)
-        });
-    </script>
+    <script src="/js/test.js"></script>
 </body>
 </html>

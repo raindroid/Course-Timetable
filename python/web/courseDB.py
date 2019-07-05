@@ -36,6 +36,9 @@ class CourseDB():
     def find_col(self, col_name: str, data: dict):
         return self.__mydb[col_name].find(data)
 
+    def update_many(self, col_name: str, query: dict, newData: dict):
+        self.__mydb[col_name].update_many(query, {'$set': newData})
+
 
 if __name__=='__main__':
     db = CourseDB('course')

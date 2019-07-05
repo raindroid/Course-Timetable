@@ -8,10 +8,41 @@ from utils import get_page, change_keys, parse_day
 from utils import bcolors
 
 def download_engineering_course_description(url: str, db: CourseDB, col_name: str):
-    get_page(url)
+    page = get_page(url)
 
     soup = BeautifulSoup(page, 'html.parser')
-    course_desc_list = soup.find_all(['tr', 'p'])[22:]
+    course_desc_list = soup.find_all(['table', 'p'])[22:]
+
+    def updateCourseDes(courseCode, courseTitle, courseDescription):
+        db.update_many(col_name, {'courseName': {'$regex': courseCode+'.*'}},
+                      {'courseTitle': courseTitle, 'courseDescription': courseDescription})
+
+    courseCode = 0  # give this variable more scope
+    for index, tag in enumerate(course_desc_list):
+        # print('Analyzing tag #{}'.format(index))
+        if tag.name == 'table' \
+                and len(tag.tr.find_all('td')) > 1: # format error at some courses
+            # this is a course code section
+            courseCode = tag.tr.td.span.string.split('\xa0')[0]
+            courseTitle = tag.tr.find_all('td')[1].span.string
+
+            # print('{}\t{}'.format(courseCode, courseName))
+            continue
+        elif tag.name == 'p':
+            # this is a course decription
+            courseDescription = tag.string
+            # print('\t\t', courseDescription)
+        elif courseCode == 'MIE368H1': # hard to handle this case
+            courseDescription = 'This course showcases the impact of analytics focusing on real world examples and case studies.  Particular focus on decision analytics, where data and models are combined to ultimately improve decision-making.  Methods include: linear and logistic regression, classification and regression trees, clustering, linear and integer optimization. Application areas include: healthcare, business, sports, manufacturing, finance, transportation, public sector.'
+        elif courseCode == 'MIE540H1':
+            courseDescription = tag.td.string
+            # print('\t\t', courseDescription)
+        else:
+            print("WARNING #{}".format(index))
+        updateCourseDes(courseCode, courseTitle, courseDescription)
+
+        # print('[ENG]Updating course title and description - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
+        #         index + 1, len(course_desc_list), '.' * int(index * 100 / len(course_desc_list))) + bcolors.ENDC)
 
 
 def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = True, drop_frist: bool = True) -> str:
@@ -93,7 +124,7 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
                     'meetings': [meeting]
                 })
 
-            print('[engineering] Download Course Detail - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
+            print('[ENG] Download Course Detail - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
                 index + 1, len(all_courses), '.' * int(index * 100 / len(all_courses))) + bcolors.ENDC)
 
     db.insert_many(col_name, course_table)
@@ -138,4 +169,6 @@ def download_engineering_table_old(db):
 
 
 if __name__ == '__main__':
-    download_engineering_course_description('https://portal.engineering.utoronto.ca/sites/calendars/current/Course_Descriptions.html')
+    db = CourseDB('course')
+    url = 'https://portal.engineering.utoronto.ca/sites/calendars/current/Course_Descriptions.html'
+    download_engineering_course_description(url, db, 'courses')
