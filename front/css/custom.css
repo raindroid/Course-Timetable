@@ -1,0 +1,85 @@
+body{
+    background-color: #f2f2f2;
+}
+.mb-time{
+    margin-bottom: 2.5rem;
+}
+.course-block{
+    background-color: firebrick;
+    border-radius: 2rem;
+}
+.nav{
+    height:3rem;
+    background-color: #0075ff;
+}
+.nav .title{
+    font-size:1.5rem;
+    font-weight:600;
+}
+.table-control{
+    height:3rem;
+    border-bottom: 0.25rem solid #71B3FF;
+}
+.table-control .pill{
+    background-color: #cfe4fd;
+    color:#2485ff;
+    font-size:1rem;
+    font-weight:600;
+    transition: color 0.5s, background-color 0.5s;
+    cursor: pointer;
+}
+.table-control .pill:hover{
+    background-color: #71B3FF !important;
+    color:#f7f7f7 !important;
+}
+.pill{
+    border-radius:2rem;
+}
+.pill-left{
+    border-bottom-left-radius: 2rem !important;
+    border-top-left-radius: 2rem !important;
+    border-bottom-right-radius: 0rem !important;
+    border-top-right-radius: 0rem !important;
+}
+.pill-right{
+    border-bottom-left-radius: 0rem !important;
+    border-top-left-radius: 0rem !important;
+    border-bottom-right-radius: 2rem !important;
+    border-top-right-radius: 2rem !important;
+}
+.pill-middle{
+    border-bottom-left-radius: 0rem !important;
+    border-top-left-radius: 0rem !important;
+    border-bottom-right-radius: 0rem !important;
+    border-top-right-radius: 0rem !important;
+}
+
+.table-control .pill.selected{
+    background-color: #71B3FF !important;
+    color:#f7f7f7 !important;
+}
+.container-card{
+    background-color: white;
+}
+.cart-number{
+    background-color: #cfe4fd;
+    color:#2485ff;
+    font-size:1rem;
+    font-weight:600;
+    transition: color 0.5s, background-color 0.5s;
+    cursor: pointer;
+}
+.cart-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.open-san{
+    font-family:  -apple-system, 'Open Sans',BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.source-san{
+    font-family:  -apple-system, 'Source Sans Pro',BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.noto-san{
+    font-family:  -apple-system, 'Noto Sans',BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
