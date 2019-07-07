@@ -4,14 +4,19 @@ var express 	= require("express"),
 	mongoose 	= require("mongoose"),
 	MongoClient = require('mongodb').MongoClient,
 	fs 			= require('fs'),
-	https 		= require('https')
-	app 		= express()
+	https 		= require('https'),
+	app 		= express(),
+	config		= require('./config.json'),
+	cors 		= require('cors')
+
+// import config from './config'
 
 var dbUrl = "mongodb://localhost:27017/"
 mongoose.connect(dbUrl + 'course', {useNewUrlParser: true});
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 var courseSchema = new mongoose.Schema({
 	courseName: String,
@@ -51,22 +56,34 @@ app.get('/api/courses/all', (req, res)=>{
 })
 
 app.get('/api/courses', (req, res)=>{
-	if (!req.query['code']) {
+	let {code, limit} = req.query
+	if (!code) {
 		res.send([])
 		return 
 	} 
 
-	courseCode = req.query.code.substring(0, 8).toUpperCase()
-	console.log(`Search for ${courseCode}`)
+	courseCode = code.substring(0, 8).toUpperCase()
+	let courseReturn = (courseList) => {
+		console.log(`Search for ${courseCode}, limit=${limit}, resultLength=${courseList.length}`)
+		res.send(courseList)
+	}
 	
-	MongoClient.connect(dbUrl, {useNewUrlParser: true}, function(err, db) {
+	MongoClient.connect(dbUrl, {useNewUrlParser: true}, (err, db) => {
 		if (err) throw err;
 		var dbo = db.db("course");
-		dbo.collection("courses").find({'courseName': {'$regex': '.*' + courseCode + '.*'}}).toArray(function(err, result) {
-		  if (err) throw err;
-		  res.send(result);
-		  db.close();
-		});
+		if (!limit ) {
+			dbo.collection("courses").find({'courseName': {'$regex': '.*' + courseCode + '.*'}}).toArray((err, result) => {
+			if (err) throw err;
+			courseReturn(result)
+			db.close();
+			});
+		} else {
+			dbo.collection("courses").find({'courseName': {'$regex': '.*' + courseCode + '.*'}}).limit(parseInt(limit)).toArray((err, result) => {
+			if (err) throw err;
+			courseReturn(result)
+			db.close();
+			});
+		}
 	}); 
 })
 
@@ -77,6 +94,6 @@ app.get('/api/courses', (req, res)=>{
 //     console.log('Server Started')
 // })
 
-app.listen(3000, '0.0.0.0', ()=>{
+app.listen(config.development.node_port, config.development.ip, ()=>{
      console.log('Server Started')
 })
