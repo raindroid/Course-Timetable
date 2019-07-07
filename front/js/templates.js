@@ -117,7 +117,7 @@ export class Page extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedCourses: [],
+            selectedCourses: ['ECE123','ECE243','ECE221','ECE216'],
             timetableRange: 'both',
             highlightCourse: ''
         }
@@ -130,7 +130,7 @@ export class Page extends React.Component{
                 </div>
                 <div className = "d-flex flex-row flex-grow-1 open-san">
                     <div className = "d-flex flex-column py-4 pl-4 info-section" style = {{width:"25rem"}}>
-                        <ControlPanel />
+                        <ControlPanel selectedCourses = {this.state.selectedCourses}/>
                     </div>
                     <div className = "d-flex flex-column flex-grow-1 p-4">
                         <div className = "d-flex flex-row table-control pb-2 open-san mb-3">

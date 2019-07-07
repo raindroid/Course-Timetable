@@ -83,3 +83,32 @@ body{
 .noto-san{
     font-family:  -apple-system, 'Noto Sans',BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+.theme-primary{
+    background-color: #cfe4fd;
+    color:#2485ff;
+}
+.theme-danger{
+    background-color: #ffaeb5;
+    color:#dc3545;
+}
+.theme-warning{
+    background-color: #ffdf7d;
+    color:#a57b00;
+}
+.theme-neutral{
+    background-color: #eaeaea;
+    color:#696969;
+}
+.theme-neutral-text{
+    color:#696969;
+}
+.course-pill-code{
+    font-size:1.2rem;
+    font-weight:600;
+}
+.course-pill{
+    height:3rem;
+}
+.loading-logo{
+    font-size:4rem;
+}
