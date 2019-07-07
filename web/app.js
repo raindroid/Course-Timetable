@@ -4,14 +4,19 @@ var express 	= require("express"),
 	mongoose 	= require("mongoose"),
 	MongoClient = require('mongodb').MongoClient,
 	fs 			= require('fs'),
-	https 		= require('https')
-	app 		= express()
+	https 		= require('https'),
+	app 		= express(),
+	config		= require('./config.json'),
+	cors 		= require('cors')
+
+// import config from './config'
 
 var dbUrl = "mongodb://localhost:27017/"
 mongoose.connect(dbUrl + 'course', {useNewUrlParser: true});
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 var courseSchema = new mongoose.Schema({
 	courseName: String,
@@ -77,6 +82,6 @@ app.get('/api/courses', (req, res)=>{
 //     console.log('Server Started')
 // })
 
-app.listen(3000, '0.0.0.0', ()=>{
+app.listen(config.development.node_port, config.development.ip, ()=>{
      console.log('Server Started')
 })
