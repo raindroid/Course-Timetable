@@ -56,22 +56,34 @@ app.get('/api/courses/all', (req, res)=>{
 })
 
 app.get('/api/courses', (req, res)=>{
-	if (!req.query['code']) {
+	let {code, limit} = req.query
+	if (!code) {
 		res.send([])
 		return 
 	} 
 
-	courseCode = req.query.code.substring(0, 8).toUpperCase()
-	console.log(`Search for ${courseCode}`)
+	courseCode = code.substring(0, 8).toUpperCase()
+	let courseReturn = (courseList) => {
+		console.log(`Search for ${courseCode}, limit=${limit}, resultLength=${courseList.length}`)
+		res.send(courseList)
+	}
 	
-	MongoClient.connect(dbUrl, {useNewUrlParser: true}, function(err, db) {
+	MongoClient.connect(dbUrl, {useNewUrlParser: true}, (err, db) => {
 		if (err) throw err;
 		var dbo = db.db("course");
-		dbo.collection("courses").find({'courseName': {'$regex': '.*' + courseCode + '.*'}}).toArray(function(err, result) {
-		  if (err) throw err;
-		  res.send(result);
-		  db.close();
-		});
+		if (!limit ) {
+			dbo.collection("courses").find({'courseName': {'$regex': '.*' + courseCode + '.*'}}).toArray((err, result) => {
+			if (err) throw err;
+			courseReturn(result)
+			db.close();
+			});
+		} else {
+			dbo.collection("courses").find({'courseName': {'$regex': '.*' + courseCode + '.*'}}).limit(parseInt(limit)).toArray((err, result) => {
+			if (err) throw err;
+			courseReturn(result)
+			db.close();
+			});
+		}
 	}); 
 })
 
