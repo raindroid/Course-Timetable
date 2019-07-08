@@ -40,6 +40,7 @@ app.get("/", (req, res)=>{
 	res.render("pages/index");
 });
 
+// API test page
 app.get('/test', (req, res)=>{
 	res.render("pages/test")
 })
@@ -55,6 +56,7 @@ app.get('/api/courses/all', (req, res)=>{
 	})
 })
 
+// General search
 app.get('/api/courses', (req, res)=>{
 	let {code, limit} = req.query
 	if (!code) {
@@ -87,12 +89,12 @@ app.get('/api/courses', (req, res)=>{
 	}); 
 })
 
-// https.createServer({
-// 	key: fs.readFileSync('server.key'),
-// 	cert: fs.readFileSync('server.cert')
-// }, app).listen(3000, '0.0.0.0', ()=>{
-//     console.log('Server Started')
-// })
+
+
+// 404 page not found
+app.get('*', function(req, res){
+	res.status(404).send('what???');
+});
 
 app.listen(config.development.node_port, config.development.ip, ()=>{
      console.log('Server Started')
