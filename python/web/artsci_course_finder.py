@@ -28,8 +28,8 @@ def get_artsci_course_names(save_file: str = ''):
         soup = BeautifulSoup(page, 'html.parser')
         all_courses_raw = soup.table
         course_codes.extend([tr.td.a.string for tr in all_courses_raw.tbody.find_all('tr')])
-        print('[artsci] Reading Course Code - ' + bcolors.OKBLUE + 'Page {} of {} {}'.format(
-            index + 1, total_page, '.' * int(index * 100 / total_page)) + bcolors.ENDC)
+        print('[artsci] Reading Course Code - ' + bcolors.OKBLUE + 'Page {} of {}'.format(
+            index + 1, total_page))
 
     if save_file != '':
         data_file.write(json.dumps(course_codes))
@@ -76,6 +76,8 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
         ori_file.close()
 
     print('Num of courses: {}'.format(len(data)))
+
+    all_courses = []
     for course in data.keys():
 
         def findCourseName(course: str) -> str:
@@ -102,7 +104,7 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
             if "cancel" in meeting_data and isinstance(meeting_data['cancel'], str) and \
                     'CANCEL' in meeting_data['cancel'].upper():
                 print('This Course is Cancelled')
-                return
+                break
 
             # set up meeting instructors
             instructor_info = []
@@ -136,7 +138,7 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
 
         if not meetings_info:
             print('This course is not available')
-            return
+            continue
 
         course_data.update({'meetings': meetings_info})
 
@@ -146,7 +148,8 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
         if save_file != '':
             data_file.write(json.dumps(course_data))
             data_file.close()
-        return course_data
+        all_courses.append(course_data)
+    return all_courses
 
 
 def download_artsci_table(db: CourseDB, col_name: str, save_year_course: bool = True, drop_frist: bool = True) -> str:
@@ -155,11 +158,11 @@ def download_artsci_table(db: CourseDB, col_name: str, save_year_course: bool = 
 
     # download course names
     course_names = get_artsci_course_names()
-    # course_names = ['CSC104', 'CSC108H']
+    # course_names = ['CSC384']
     for index, courseName in enumerate(course_names):
         courseData = get_artsci_course_detail(courseName)
         if courseData:
-            db.insert_one(col_name, courseData)
+            db.insert_many(col_name, courseData)
 
         print('[artsci] Download Course Detail - ' + courseName + ' - '+ bcolors.OKBLUE + 'Progress {} of {} {}'.format(
             index + 1, len(course_names),
@@ -171,8 +174,8 @@ if __name__ == '__main__':
     # get_artsci_course_detail('APM441H1')
     # artsci_course_detail('CSC108H1')
     # get_artsci_course_detail('PSY202H1', '../../data/samples/PSY202H1.json')
-    get_artsci_course_detail('HIS310H1', '../../data/samples/HIS310H1.json')
+    # get_artsci_course_detail('HIS310H1', '../../data/samples/HIS310H1.json')
     # get_artsci_course_detail('CSC104H1', '../../data/samples/CSC104H1.json', '../../data/samples/CSC104H1-ori.json')
-    # db = CourseDB('course')
-    # download_artsci_table(db, 'test')
+    db = CourseDB('course2')
+    download_artsci_table(db, 'test')
     pass

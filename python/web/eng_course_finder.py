@@ -41,8 +41,8 @@ def download_engineering_course_description(url: str, db: CourseDB, col_name: st
             print("WARNING #{}".format(index))
         updateCourseDes(courseCode, courseTitle, courseDescription)
 
-        print('[ENG]Updating course title and description - ' + courseCode + ' - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
-                index + 1, len(course_desc_list), '.' * int(index * 100 / len(course_desc_list))) + bcolors.ENDC)
+        print('[ENG]Updating course title and description - ' + courseCode + ' - ' + bcolors.OKBLUE + 'Progress {} of {}'.format(
+                index + 1, len(course_desc_list)) + bcolors.ENDC)
 
 
 def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = True, drop_frist: bool = True) -> str:
@@ -136,8 +136,8 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
                     'meetings': {meeting_type: [meeting]}
                 })
 
-            print('[ENG] Reading Session Detail - ' + course_name + ' - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
-                index + 1, len(all_courses), '.' * int(index * 100 / len(all_courses))) + bcolors.ENDC)
+            print('[ENG] Reading Session Detail - ' + course_name + ' - ' + bcolors.OKBLUE + 'Progress {} of {}'.format(
+                index + 1, len(all_courses)) + bcolors.ENDC)
 
     db.insert_many(col_name, course_table)
 
