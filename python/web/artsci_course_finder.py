@@ -28,7 +28,7 @@ def get_artsci_course_names(save_file: str = ''):
         soup = BeautifulSoup(page, 'html.parser')
         all_courses_raw = soup.table
         course_codes.extend([tr.td.a.string for tr in all_courses_raw.tbody.find_all('tr')])
-        print('[artsci] Reading Course Code - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
+        print('[artsci] Reading Course Code - ' + bcolors.OKBLUE + 'Page {} of {} {}'.format(
             index + 1, total_page, '.' * int(index * 100 / total_page)) + bcolors.ENDC)
 
     if save_file != '':
@@ -51,7 +51,7 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
     api_url = '/api/20199/courses?org=&code={}&section=&studyyear=&daytime=&weekday=&' \
               'prof=&breadth=&online=&waitlist=&available=&title='.format(course)
 
-    print('API url = {}'.format(url + api_url))
+    # print('API url = {}'.format(url + api_url))
     page = get_page(url + api_url)
     if not page:
         # empty page found
@@ -96,7 +96,7 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
             meetings_data = data[course].pop('meetings')
         except:
             continue
-        meetings_info = []
+        meetings_info = {}
 
         for meetingName, meeting_data in meetings_data.items():
             if "cancel" in meeting_data and isinstance(meeting_data['cancel'], str) and \
@@ -122,12 +122,17 @@ def get_artsci_course_detail(course: str, save_file: str = '', save_file_ori: st
             if not meeting_all:
                 continue
 
-            meetings_info.append({'meetingName': meetingName.replace('-', ''),
-                                  'meetingType': meeting_data.pop('teachingMethod'),
-                                  'instructors': instructor_info,
-                                  'detail': meeting_all})
+            meeting_type = meeting_data.pop('teachingMethod')
+            if meeting_type in meetings_info:
+                meetings_info[meeting_type].append({'meetingName': meetingName.replace('-', ''),
+                                      'instructors': instructor_info,
+                                      'detail': meeting_all})
+            else:
+                meetings_info.update({meeting_type: [{'meetingName': meetingName.replace('-', ''),
+                                                    'instructors': instructor_info,
+                                                    'detail': meeting_all}]})
             # other info
-            meetings_info[-1].update(meeting_data)
+            meetings_info[meeting_type][-1].update(meeting_data)
 
         if not meetings_info:
             print('This course is not available')
@@ -156,8 +161,9 @@ def download_artsci_table(db: CourseDB, col_name: str, save_year_course: bool = 
         if courseData:
             db.insert_one(col_name, courseData)
 
-        print('[artsci] Download Course Detail - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
-            index + 1, len(course_names), '.' * int(index * 100 / len(course_names))) + bcolors.ENDC)
+        print('[artsci] Download Course Detail - ' + courseName + ' - '+ bcolors.OKBLUE + 'Progress {} of {} {}'.format(
+            index + 1, len(course_names),
+            (bcolors.OKGREEN + ' SUCCESS ' if courseData else bcolors.FAIL + ' FAILED ') + bcolors.ENDC))
 
 
 if __name__ == '__main__':

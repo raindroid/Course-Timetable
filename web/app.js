@@ -52,6 +52,8 @@ app.get('/api/courses/all', (req, res)=>{
 		docs.forEach((doc)=>{
 			courses.push(doc.courseName)
 		})
+		console.log(`Search for all courses timeStamp=${new Date().toTimeString()}`);
+		
 		res.send(courses)
 	})
 })
