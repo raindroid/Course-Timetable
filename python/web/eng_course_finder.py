@@ -41,8 +41,8 @@ def download_engineering_course_description(url: str, db: CourseDB, col_name: st
             print("WARNING #{}".format(index))
         updateCourseDes(courseCode, courseTitle, courseDescription)
 
-        print('[ENG]Updating course title and description - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
-                index + 1, len(course_desc_list), '.' * int(index * 100 / len(course_desc_list))) + bcolors.ENDC)
+        print('[ENG]Updating course title and description - ' + courseCode + ' - ' + bcolors.OKBLUE + 'Progress {} of {}'.format(
+                index + 1, len(course_desc_list)) + bcolors.ENDC)
 
 
 def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_course: bool = True, drop_frist: bool = True) -> str:
@@ -85,33 +85,45 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
                        'meetingType': meeting_info[1][:3],
                        'instructors': [] if instructor == 'NONE' else [instructor],
                        'detail': [detail_info]}
+            meeting_type = meeting.pop('meetingType')
 
             # check for previous course name
             for previous_course in course_table:
                 if previous_course['courseName'] == meeting_info[0]:
 
-                    # check for previous meeting name
-                    meeting_found = False
+                    # check for previous meeting type first
+                    meeting_type_found = False
+                    for (previous_meeting_type, meetings) in previous_course['meetings'].items():
+                        if previous_meeting_type == meeting_type:
 
-                    for previous_meeting in previous_course['meetings']:
-                        if previous_meeting['meetingName'] == meeting['meetingName']:
+                            # check for previous meeting name
+                            meeting_found = False
+                            for previous_meeting in meetings:
+                                if previous_meeting['meetingName'] == meeting['meetingName']:
 
-                            # update instructor list
-                            instructor_found = False
-                            for previous_instructor in previous_meeting['instructors']:
-                                if previous_instructor == meeting['instructors'][0]:
-                                    instructor_found = True
+                                    # update instructor list
+                                    instructor_found = False
+                                    for previous_instructor in previous_meeting['instructors']:
+                                        if previous_instructor == meeting['instructors'][0]:
+                                            instructor_found = True
+                                            break
+                                    if not instructor_found:
+                                        previous_meeting['instructors'].extend(meeting['instructors'])
+
+                                    previous_meeting['detail'].extend(meeting['detail'])
+                                    meeting_found = True
                                     break
-                            if not instructor_found:
-                                previous_meeting['instructors'].extend(meeting['instructors'])
 
-                            previous_meeting['detail'].extend(meeting['detail'])
-                            meeting_found = True
+                            if not meeting_found:
+                                # no previous meeting found
+                                meetings.append(meeting)
+
+                            meeting_type_found = True
                             break
 
-                    if not meeting_found:
-                        # no previous meeting found
-                        previous_course['meetings'].append(meeting)
+                    if not meeting_type_found:
+                        # add a new type
+                        previous_course['meetings'].update({meeting_type: [meeting]})
 
                     course_found = True
                     break
@@ -121,11 +133,11 @@ def download_engineering_table(url: str, db: CourseDB, col_name: str, save_year_
                 course_table.append({
                     'courseName': course_name,
                     'courseType': course_type,
-                    'meetings': [meeting]
+                    'meetings': {meeting_type: [meeting]}
                 })
 
-            print('[ENG] Download Course Detail - ' + bcolors.OKBLUE + 'Progress {} of {} {}'.format(
-                index + 1, len(all_courses), '.' * int(index * 100 / len(all_courses))) + bcolors.ENDC)
+            print('[ENG] Reading Session Detail - ' + course_name + ' - ' + bcolors.OKBLUE + 'Progress {} of {}'.format(
+                index + 1, len(all_courses)) + bcolors.ENDC)
 
     db.insert_many(col_name, course_table)
 

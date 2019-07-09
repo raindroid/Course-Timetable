@@ -62,3 +62,16 @@
   4. Display on the timetable
 
 - Random Generate
+
+## API
+- `/api/courses?code=ece&limit=10&type=f&title=computer&detail=true`
+  - code - Course code
+  - limit - max number of results
+  - type
+    - f = fall
+    - s = winter
+    - y = all
+  - title - Course title
+  - detail 
+    - falsy - default - only display course names and titles
+    - truthy display everything

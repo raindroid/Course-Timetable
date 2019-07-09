@@ -11,7 +11,7 @@ from utils import bcolors
 import time
 
 if __name__ == '__main__':
-    db = CourseDB('course2')
+    db = CourseDB('course')
 
     startTime = time.time()
 

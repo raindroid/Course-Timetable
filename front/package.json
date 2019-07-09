@@ -8,6 +8,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "private": true,
   "babel": {
     "presets": [
       [

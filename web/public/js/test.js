@@ -72,5 +72,5 @@ document.getElementById("courseForm").onsubmit = (function(event) {
     }
     xhttp.open('GET', '/API/courses?code=' + document.getElementById('code').value, true)
     xhttp.send()
-    console.log('Get url=API/courses?code=' + document.getElementById('code').value)
+    console.log('Get url=./API/courses?code=' + document.getElementById('code').value)
 });
