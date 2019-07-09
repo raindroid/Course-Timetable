@@ -17,7 +17,7 @@ def get_artsci_course_names(save_file: str = ''):
     total_page = int(re.findall('1 of (\d+)', page)[0])
     total_page = 472 if total_page == 0 else total_page
 
-    pprint('[artsci] Total total_page: {}'.format(total_page))
+    print('[artsci] Total total_page: {}'.format(total_page))
     course_codes = []
 
     for index in range(total_page):
@@ -29,7 +29,7 @@ def get_artsci_course_names(save_file: str = ''):
         all_courses_raw = soup.table
         course_codes.extend([tr.td.a.string for tr in all_courses_raw.tbody.find_all('tr')])
         print('[artsci] Reading Course Code - ' + bcolors.OKBLUE + 'Page {} of {}'.format(
-            index + 1, total_page))
+            index + 1, total_page) + bcolors.ENDC)
 
     if save_file != '':
         data_file.write(json.dumps(course_codes))
