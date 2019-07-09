@@ -117,20 +117,37 @@ export class Page extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedCourses: ['ECE123','ECE243','ECE221','ECE216'],
+            selectedCourses: [],
             timetableRange: 'both',
             highlightCourse: ''
         }
+        this.addCourse = this.addCourse.bind(this);
+        this.removeCourse = this.removeCourse.bind(this);
+    }
+    addCourse(newCourseObj){
+        let org = this.state.selectedCourses;
+        org.push(newCourseObj);
+        this.setState({selectedCourses:org});
+    }
+    removeCourse(courseCode){
+        let org = this.state.selectedCourses;
+        for (let i = 0;i<org.length;i++){
+            if (org[i].courseName == courseCode){
+                org.splice(i,1);
+                break;
+            }
+        }
+        this.setState({selectedCourses:org});
     }
     render(){
         return(
             <div className = "d-flex flex-column h-100">
-                <div className = "nav d-flex" id = "navbar">
+                <div className = "nav d-none" id = "navbar">
                     <div className = "m-auto title open-san text-white">LOGO</div>
                 </div>
                 <div className = "d-flex flex-row flex-grow-1 open-san">
                     <div className = "d-flex flex-column py-4 pl-4 info-section" style = {{width:"25rem"}}>
-                        <ControlPanel selectedCourses = {this.state.selectedCourses}/>
+                        <ControlPanel selectedCourses = {this.state.selectedCourses} addCourse = {this.addCourse} removeCourse = {this.removeCourse}/>
                     </div>
                     <div className = "d-flex flex-column flex-grow-1 p-4">
                         <div className = "d-flex flex-row table-control pb-2 open-san mb-3">

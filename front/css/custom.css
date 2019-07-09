@@ -62,12 +62,8 @@ body{
     background-color: white;
 }
 .cart-number{
-    background-color: #cfe4fd;
-    color:#2485ff;
     font-size:1rem;
     font-weight:600;
-    transition: color 0.5s, background-color 0.5s;
-    cursor: pointer;
 }
 .cart-title{
     font-size: 1.5rem;
@@ -87,13 +83,38 @@ body{
     background-color: #cfe4fd;
     color:#2485ff;
 }
+.theme-primary-action{
+    background-color: #cfe4fd;
+    color:#2485ff;
+    font-weight:600;
+    cursor:pointer;
+    transition: color 0.5s, background-color 0.5s;
+}
+.theme-primary-action:hover{
+    background-color: #2485ff;
+    color:#cfe4fd;
+}
 .theme-danger{
     background-color: #ffaeb5;
     color:#dc3545;
 }
+.theme-danger-action{
+    background-color: #ffaeb5;
+    color:#dc3545;
+    cursor:pointer;
+    transition: color 0.5s, background-color 0.5s;
+}
+.theme-danger-action:hover{
+    background-color: #dc3545;
+    color:#ffaeb5;
+}
 .theme-warning{
     background-color: #ffdf7d;
     color:#a57b00;
+}
+.theme-success{
+    background-color: #7fea98;
+    color: #007d1c;
 }
 .theme-neutral{
     background-color: #eaeaea;
