@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test Page</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="index.css">
+    
+</head>
+<body>
+    
+
+    <div id="wapper">
+
+        <div id="sidebar">
+            <i class="fa fa-table fa-lg" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div id="content">
+        <div id="info" >
+            <nav aria-label="...">
+                <ul class="pagination pagination-md">
+                    <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                        Fall
+                        <span class="sr-only">(current)</span>
+                    </span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">Winter</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Both</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div id='time-table' class = "d-flex flex-column flex-grow-1 p-4">
+            <div class = "border border-bottom w-100 mb-4 d-flex flex-row pl-5">
+                <div class=''>
+                    <div class = "w-100 mb-time time-text"></div>
+                    <div class = "w-100 mb-time time-text">9:00</div>
+                    <div class = "w-100 mb-time time-text">10:00</div>
+                    <div class = "w-100 mb-time time-text">11:00</div>
+                    <div class = "w-100 mb-time time-text">12:00</div>
+                    <div class = "w-100 mb-time time-text">13:00</div>
+                    <div class = "w-100 mb-time time-text">14:00</div>
+                    <div class = "w-100 mb-time time-text">15:00</div>
+                    <div class = "w-100 mb-time time-text">16:00</div>
+                    <div class = "w-100 mb-time time-text">17:00</div>
+                    <div class = "w-100 mb-time time-text">18:00</div>
+                    <div class = "w-100 mb-time time-text">19:00</div>
+                    <div class = "w-100 mb-time time-text">20:00</div>
+                    <div class = "w-100 time-text">21:00</div>
+                </div>
+                <div class = "mx-auto pt-3 d-flex flex-column justify-content-start flex-grow-1" id='col-mon'>
+                    <div class="mx-auto">Mon</div>
+                    <div class=' course'>
+                        <p class=''>ECE 302</p>
+                        <p class=''>Probobility</p>
+                    </div>
+                </div>
+                <div class = "d-flex mx-auto pt-3 flex-grow-1">
+                    <div class="mx-auto">Tue</div>
+                </div>
+                <div class = "d-flex mx-auto pt-3 flex-grow-1">
+                    <div class="mx-auto">Wed</div>
+                </div>
+                <div class = "d-flex mx-auto pt-3 flex-grow-1">
+                    <div class="mx-auto">Thu</div>
+                </div>
+                <div class = "d-flex mx-auto pt-3 flex-grow-1">
+                    <div class="mx-auto">Fri</div>
+                </div>
+            </div>
+            <div class = "d-flex flex-row h-100 w-100">
+                <div class = "flex-grow-1 monContainer"></div>
+                <div class = "flex-grow-1 tueContainer"></div>
+                <div class = "flex-grow-1 wedContainer"></div>
+                <div class = "flex-grow-1 thurContainer"></div>
+                <div class = "flex-grow-1 friContainer"></div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="index.js"></script>
+    </body>
+</html>

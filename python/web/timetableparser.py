@@ -24,9 +24,11 @@ if __name__ == '__main__':
                                save_year_course=False, drop_frist=False)
     # update artsci course to the mongodb
     download_artsci_table(db, 'courses', drop_frist=False)
+
     # update engineering course detail
+    excep = get_enginneering_exception_dict()
     download_engineering_course_description(
-        'https://portal.engineering.utoronto.ca/sites/calendars/current/Course_Descriptions.html', db, 'courses')
+        'https://portal.engineering.utoronto.ca/sites/calendars/current/Course_Descriptions.html', db, 'courses', excep)
 
     print(bcolors.OKGREEN + 'All download DONE!' + bcolors.ENDC)
 

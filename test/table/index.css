@@ -1,0 +1,54 @@
+#sidebar {
+    height: 100%;
+    min-width: 40px;
+    position: fixed;
+    z-index: 1;
+    top: 0; /* stay at top */
+    left: 0;
+    padding-top: 30px;
+    padding-right: 4px;
+    overflow-x: hidden; /* disable horizontal scroll */
+    background: rgb(246, 249, 250);
+    box-shadow: 0 10px 38px rgba(0,0,0,0.30), 0 -10px 12px rgba(0,0,0,0.22);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+#sidebar > * {
+    vertical-align: middle;
+}
+
+#sidebar > svg {
+    margin: 10px;
+}
+
+#info > nav {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 40px;
+    margin-right: 80px;
+}
+
+#content {
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+#time-table {
+    margin-top: 100px;
+}
+
+.time-text {
+    padding-bottom: 40px;
+}
+
+.course {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.137), 0 8px 12px rgba(0, 0, 0, 0.116);
+    border-radius: 5px;
+}
+
+.course>p{
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+}

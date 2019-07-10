@@ -169,6 +169,7 @@ def download_artsci_table(db: CourseDB, col_name: str, save_year_course: bool = 
             (bcolors.OKGREEN + ' SUCCESS ' if courseData else bcolors.FAIL + ' FAILED ') + bcolors.ENDC))
 
 
+
 if __name__ == '__main__':
     # artsci_course_test('../../data/as_course_list.json')
     # get_artsci_course_detail('APM441H1')
