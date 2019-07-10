@@ -42,13 +42,27 @@
     padding-bottom: 40px;
 }
 
-.course {
-    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.137), 0 8px 12px rgba(0, 0, 0, 0.116);
-    border-radius: 5px;
+.time-block {
+    padding: 10px;
 }
 
-.course>p{
+.course {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.089), 0 8px 12px rgba(0, 0, 0, 0.041);
+    border-radius: 5px;
+    /* border-left: 3px red solid;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px; */
+}
+
+
+.course>p,
+.time-gap>p{
     margin: auto;
     justify-content: center;
     text-align: center;
 }
+
+.time-gap {
+
+}
+
