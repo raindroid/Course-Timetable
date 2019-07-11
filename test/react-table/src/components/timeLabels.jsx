@@ -4,7 +4,7 @@ class TimeLabels extends Component {
     state = { 
         startHour: 9,   /** hour */
         endHour: 21,    /** hour */
-        interval: 30    /** in min */
+        interval: 60    /** in min */
     }
 
     tagStyle = {
@@ -13,8 +13,10 @@ class TimeLabels extends Component {
     createLabels = (dimension, minHeight = 2 /** px per miniutes */) => {
         const {startHour, endHour, interval} = this.state
         // const {tagHeight} = dimension;
-        this.tagStyle.height = `${(dimension.minHeight || 2) * interval}px`
-        let tagStyle = this.tagStyle
+        const tagStyle = {
+            height: `${(minHeight || 2) * interval}px`
+        }
+        // let tagStyle = this.tagStyle
 
         let labels = []
         for (let hour = startHour; hour < endHour; hour++) {
@@ -36,13 +38,13 @@ class TimeLabels extends Component {
     }
 
     render() { 
-        let {dayLabelHeight} = this.props.dimension
+        let {dayLabelHeight, minHeight} = this.props.dimension
         let dim = {
             tagHeight: '50px'
         }
         return (
             <div className="p-2" style={{marginTop: dayLabelHeight}}>
-                {this.createLabels(dim)}
+                {this.createLabels(dim, minHeight)}
             </div> 
         );
     }
