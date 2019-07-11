@@ -5,13 +5,13 @@
 /* Extra small devices (phones, up to 480px) */
 @media screen and (max-width: 767px) {
     body {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991px) {
     body {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 }
 /* tablets/desktops and up ----------- */

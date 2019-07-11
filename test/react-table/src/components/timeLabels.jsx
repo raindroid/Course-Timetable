@@ -10,17 +10,17 @@ class TimeLabels extends Component {
     tagStyle = {
     }
 
-    createLabels = (dimension) => {
+    createLabels = (dimension, minHeight = 2 /** px per miniutes */) => {
         const {startHour, endHour, interval} = this.state
-        const {tagHeight} = dimension;
-        this.tagStyle.height = tagHeight
+        // const {tagHeight} = dimension;
+        this.tagStyle.height = `${(dimension.minHeight || 2) * interval}px`
         let tagStyle = this.tagStyle
 
         let labels = []
         for (let hour = startHour; hour < endHour; hour++) {
             for (let min = 0; min < 60; min += interval) {
                 let label = (
-                    <div className="w-100 mb-time time-text text-right" style={tagStyle}>
+                    <div className="w-100 mb-time time-text text-right m-0 p-0" style={tagStyle}>
                         {`${hour}:` + `${min}`.padStart(2, '0')}
                     </div>)
                 labels.push(label)
