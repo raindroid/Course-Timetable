@@ -1,27 +1,46 @@
 import React, { Component } from 'react';
+import {Card, ExpansionPanel, ExpansionPanelActions, ExpansionPanelDetails, ExpansionPanelSummary} from '@material-ui/core';
+import uniqid from 'uniqid'
 
 class TableContent extends Component {
-    state = {  }
+    state = { 
+        popupMeeting: undefined,
+    }
+
+    preState = {
+        preMeeting: undefined
+    }
+
+    meetingLists = [
+        [
+            {_id: uniqid(), courseName: 'ECE302', courseTitle: 'probability', meetingType: 'LEC', meetingStart: '10:00', meeingEnd:'11:00', meetingLocation: "GB244"},
+            {_id: uniqid(), courseName: 'ECE302', courseTitle: 'probability', meetingType: 'TUT', meetingStart: '13:00', meeingEnd:'15:00', meetingLocation: "GB243"},
+        ],
+        [],
+        [],
+        [
+            {_id: uniqid(), courseName: 'ECE302', courseTitle: 'probability', meetingType: 'LEC', meetingStart: '12:00', meeingEnd:'13:00', meetingLocation: "GB244"},
+            {_id: uniqid(), courseName: 'ECE302', courseTitle: 'probability', meetingType: 'TUT', meetingStart: '13:00', meeingEnd:'14:00', meetingLocation: "GB243"},
+        ],
+        []]
 
     getMeetingList = (day) => {
-        if (day == 1)
-            return [
-                {courseName: 'ECE302', courseTitle: 'probability', meetingType: 'LEC', meetingStart: '10:00', meeingEnd:'11:00'},
-                {courseName: 'ECE302', courseTitle: 'probability', meetingType: 'TUT', meetingStart: '13:00', meeingEnd:'15:00'},
-            ]
-        else if (day == 4)
-            return [
-                {courseName: 'ECE302', courseTitle: 'probability', meetingType: 'LEC', meetingStart: '12:00', meeingEnd:'13:00'},
-                {courseName: 'ECE302', courseTitle: 'probability', meetingType: 'TUT', meetingStart: '13:00', meeingEnd:'14:00'},
-            ]
-        else
-            return []
+        return this.meetingLists[day - 1]
+    }
+
+
+    clickTest = (meeting) => {
+        // console.log(meeting)
+        let newState = this.state
+        newState.popupMeeting = meeting._id;
+        this.setState(newState)
     }
 
     generateCourseTags = (meetingList, minHeight = 2, startHour = 9) => {
         let tags = []
         let dayTime = startHour * 60;   /** current time in min */
         let {displayMode} = this.props
+        let tagIndex = 0
         meetingList.forEach(meeting => {
             let startTime = meeting.meetingStart.split(':').map(e=>parseInt(e)).reduce((a,b)=>a*60+b)
             let endTime = meeting.meeingEnd.split(':').map(e=>parseInt(e)).reduce((a,b)=>a*60+b)
@@ -29,10 +48,10 @@ class TableContent extends Component {
             if (dayTime != startTime) {
                 let gapHeight = `${minHeight * (startTime - dayTime)}px`
                 let gapTag = (
-                    <div className="p-0 m-0" style={{height: gapHeight}}>
+                    <div className="p-0 m-0" style={{height: gapHeight}} key={tagIndex++}>
                         <div className="h-100" style={{textAlign: "center", lineHeight: gapHeight}}>
                             {(dayTime != startHour * 60 && displayMode == 'L') ? `${(startTime - dayTime) / 60} hour(s) gap` : ''}
-                            {(dayTime != startHour * 60 && displayMode == 'M') ? `${(startTime - dayTime) / 60} h` : ''}
+                            {(dayTime != startHour * 60 && displayMode == 'M') ? `${(startTime - dayTime) / 60} h gap` : ''}
                         </div>
                     </div>
                 )
@@ -40,13 +59,54 @@ class TableContent extends Component {
             }
             
             let courseHeight = minHeight * (endTime - startTime) 
-            let clickTest = () => {alert('clicked')}
+            let courseBlockStyle = {
+                height: `${courseHeight}px`
+            }
+            let courseTagStyle = {}
+            let courseContentStyle = {}
+            let expanded = false
+            if (meeting._id == this.state.popupMeeting && meeting._id != this.preState.preMeeting) {
+                expanded = true
+                courseTagStyle = {
+                    // background: '#18ffff',
+                    position: 'absolute',
+                    left: '0px',
+                    right: '0px',
+                    height: `${minHeight * (endTime - startTime) + 120}px`,
+                    zIndex: 1
+                }
+                courseContentStyle = {
+                    background: '#18ffff',
+                    height: '90%'
+                }
+                this.preState.preMeeting = meeting._id
+            } else {
+                courseTagStyle = {
+                    // background: '#ffffff',
+                    position: 'absolute',
+                    left: '0px',
+                    right: '0px',
+                    height: `${minHeight * (endTime - startTime)}px`,
+                    zIndex: 0
+                }
+                courseContentStyle = {
+                    background: '#ffffff',
+                    height: '90%'
+                }
+                if (this.preState.preMeeting == meeting._id) this.preState.preMeeting = undefined
+            }
+
             let courseTag = (
-                <div className="p-1" style={{height: `${courseHeight}px`}} onclick="clickTest">
-                    <div className="time-block h-100 w-100">
-                        <p className='m-0'>{meeting.courseName}</p>
-                        <p className="badge badge-pill badge-info ml-2 mb-0">{meeting.meetingType}</p>
-                        {(courseHeight > 100 && displayMode == 'L') ? <p>{meeting.meetingStart} - {meeting.meeingEnd}</p> : ''}
+                <div className="p-1" style={courseBlockStyle} onClick={()=>this.clickTest(meeting)} key={tagIndex++}>
+                    <div  style={courseTagStyle}>
+                        <div className="time-block w-100" style={courseContentStyle}>
+                            <p className='m-0'>{meeting.courseName}</p>
+                            <p className="badge badge-pill badge-info ml-2 mb-0">{meeting.meetingType}</p>
+                            <p>
+                                {(expanded || (courseHeight > 100 && displayMode == 'L')) ? <span>{meeting.meetingStart} - {meeting.meeingEnd}<br></br></span> : ''}
+                                {(expanded) ? <span>{meeting.meetingLocation}</span> : ''}
+                            </p>
+                        </div>
                     </div>
                 </div>
             )
@@ -59,9 +119,9 @@ class TableContent extends Component {
 
     renderClassLists = (minHeight = 2, startDay = 1, endDay = 5) => {
         let lists = []
-        for (let day = startDay; day < endDay; day++) {
+        for (let day = startDay; day <= endDay; day++) {
             let list = (
-                <div className="col pl-0 pr-0">
+                <div className="col pl-0 pr-0" key={day}>
                     {this.generateCourseTags(this.getMeetingList(day), minHeight)}
                 </div>)
             lists.push(list)
@@ -72,8 +132,8 @@ class TableContent extends Component {
     render() { 
         let {minHeight} = this.props.dimension
         return ( 
-        <div className="border w-100 h-100 pl-3 pr-3">
-            <div className="row text-center w-100">
+        <div className="border w-100 h-100 p-0 m-0">
+            <div className="row text-center w-100 m-0 p-0">
                 {this.renderClassLists(minHeight)}
             </div>
         </div> );

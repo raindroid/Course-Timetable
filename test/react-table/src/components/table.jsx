@@ -15,7 +15,6 @@ class Table extends Component {
 
     handleResize = () => {
         let currentState = this.state
-        console.log(`window size changed ${window.innerWidth}`)
         if (window.innerWidth < 300) {
             currentState.displayMode = 'S'
         } else if (window.innerWidth < 550 ) {
@@ -23,7 +22,6 @@ class Table extends Component {
         } else {
             currentState.displayMode = 'L'            
         }
-        console.log(this.state.dimension.dayLabelHeight)
         this.setState(currentState)
     }
 

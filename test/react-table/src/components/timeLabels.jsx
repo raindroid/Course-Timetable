@@ -22,7 +22,7 @@ class TimeLabels extends Component {
         for (let hour = startHour; hour < endHour; hour++) {
             for (let min = 0; min < 60; min += interval) {
                 let label = (
-                    <div className="w-100 mb-time time-text text-right m-0 p-0" style={tagStyle}>
+                    <div className="w-100 mb-time time-text text-right m-0 p-0" style={tagStyle} key={hour+''+min}>
                         {`${hour}:` + `${min}`.padStart(2, '0')}
                     </div>)
                 labels.push(label)
@@ -30,7 +30,7 @@ class TimeLabels extends Component {
         }
         // add the last one
         labels.push((
-            <div className="w-100 mb-time time-text text-right" style={tagStyle}>
+            <div className="w-100 mb-time time-text text-right" style={tagStyle} key='lastOne'>
                 {`${endHour}:00`}
             </div>
         ))
