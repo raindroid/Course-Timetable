@@ -5,6 +5,7 @@ globalVar;
 
 import {ControlPanel} from "./conponents.js";
 import {getCookie} from "./functions.js";
+import Table from './tableComponents/table.js';
 
 export class ORGPage extends React.Component{
     constructor(props){
@@ -159,7 +160,8 @@ export class Page extends React.Component{
                             <div className = "d-flex px-3 pill-middle pill"><div className = " m-auto">Winter</div></div>
                             <div className = "d-flex px-3 pill-right pill"><div className = " m-auto">Both</div></div>
                         </div>
-                        <div className = "container-card pill shadow d-flex flex-row flex-grow-1 open-san">
+                        <Table></Table>
+                        {/* <div className = "container-card pill shadow d-flex flex-row flex-grow-1 open-san">
                             <div className = "d-flex flex-column flex-grow-1 p-4" style = {{position:"relative"}}>
                                 <div className = "d-flex flex-column">
                                     <div className = "border-bottom w-100 mb-4 d-flex flex-row pl-5">
@@ -220,7 +222,7 @@ export class Page extends React.Component{
                         <div className = "flex-grow-1 friContainer" style = {{position:"relative"}} ></div>
                     </div>
                 </div>
-                        </div>
+        </div> */}
                     </div>
                 </div>
             </div>

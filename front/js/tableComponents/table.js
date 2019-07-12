@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TimeLabels from './timeLabels';
-import './custom.css'
+import './customTable.css'
 import DayLabels from './dayLabels';
 import TableContent from './tableContent';
 
