@@ -1,0 +1,66 @@
+* {
+    -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
+}
+
+/* Extra small devices (phones, up to 480px) */
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 0.8rem;
+    }
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+    body {
+        font-size: 0.9rem;
+    }
+}
+/* tablets/desktops and up ----------- */
+@media (min-width: 992px) and (max-width: 1199px) {
+    body {
+        font-size: 1.0rem;
+    }
+}
+/* large desktops and up ----------- */
+@media screen and (min-width: 1200px) {
+    body {
+        font-size: 1.0rem;
+    }
+}
+
+#content {
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+#time-table {
+    margin-top: 100px;
+}
+
+.time-text {
+    /* padding-bottom: 4px; */
+}
+
+.time-gap {
+    min-height: 50px;
+}
+
+.time-block {
+    min-height: 50px;
+    /* margin: 10px; */
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.089), 0 8px 12px rgba(0, 0, 0, 0.041);
+    border-radius: 5px;
+    transition-duration: 200ms;
+    /* border-left: 3px red solid;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px; */
+}
+
+.time-block:hover {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.151), 0 8px 12px rgba(0, 0, 0, 0.075);
+    transition-duration: 60ms;
+}
+
+.time-block:active {
+
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.034), 0 8px 12px rgba(0, 0, 0, 0.041);
+}

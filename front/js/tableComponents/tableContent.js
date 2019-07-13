@@ -29,11 +29,19 @@ class TableContent extends Component {
     }
 
 
-    clickTest = (meeting) => {
+    clickTest = (meeting, forceDiable= false) => {
         // console.log(meeting)
+        if (forceDiable && meeting._id != newState.popupMeeting) return
         let newState = this.state
         newState.popupMeeting = (meeting._id == newState.popupMeeting) ? undefined : meeting._id;
         this.setState(newState)
+    }
+
+    allCollapse = () => {
+        let newState = this.state
+        newState.popupMeeting = undefined
+        this.setState(newState)
+        this.preState.preMeeting = undefined
     }
 
     generateCourseTags = (meetingList, minHeight = 2, startHour = 9) => {
@@ -132,8 +140,8 @@ class TableContent extends Component {
     render() { 
         let {minHeight} = this.props.dimension
         return ( 
-        <div className="border w-100 h-100 p-0 m-0">
-            <div className="row text-center w-100 m-0 p-0">
+        <div className="border w-100 h-100 p-0 m-0" onClick={this.allCollapse}>
+            <div className="row text-center w-100 m-0 p-0" onClick={this.allCollapse}>
                 {this.renderClassLists(minHeight)}
             </div>
         </div> );
