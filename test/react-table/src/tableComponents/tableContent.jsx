@@ -27,22 +27,43 @@ class TableContent extends Component {
 
     updateMeetings = () => {
         this.meetings = []
+        let id_cnt = 0;
         let {selectedMeetings, selectedCourses} = this.props
         selectedMeetings.forEach(meetingData=>{
             let {courseCode, meetingCode, meetingType} = meetingData
             let course = selectedCourses.find(c=>c.courseName === courseCode) 
             let {detail} = course.meetings[meetingType].find(m=>m.meetingName===meetingCode)
 
-            let meeting = {_id: `${courseCode}-${meetingCode}`, courseCode: courseCode, courseName: course.courseTitle, meetingCode: meetingCode, meetingType: meetingType}
+            let meeting = {
+                // _id: `${courseCode}-${meetingCode}`, 
+                courseCode: courseCode, 
+                courseName: course.courseTitle, 
+                meetingCode: meetingCode, 
+                meetingType: meetingType,
+                colors: course.colors
+            }
+            
             detail.forEach(m=>{
+                meeting._id = `${id_cnt ++}`
                 meeting.meetingStart = m.meetingStartTime
                 meeting.meetingEnd = m.meetingEndTime
                 meeting.meetingLocation = m.meetingLocation || m.assignedRoom1
                 meeting.day = m.meetingDay
+                // check for duplications
+                let preMeeting = this.meetings.find(pm=>
+                    pm.meetingStart === meeting.meetingStart && 
+                    pm.meetingEnd === meeting.meetingEnd && 
+                    pm.day == meeting.day &&
+                    pm.courseCode === meeting.courseCode &&
+                    pm.meetingCode === meeting.meetingCode)
+                if (preMeeting) {
+                    preMeeting.meetingLocation += ' / ' + meeting.meetingLocation
+                    
+                } else {
+                    this.meetings.push(Object.assign({}, meeting))
+                }
             })
-            this.meetings.push(meeting)
         })
-        
     }
 
     helpers = {
@@ -53,7 +74,6 @@ class TableContent extends Component {
             return (hour < 10 ? `0${hour}` : `${hour}`) + ':' + (min < 10 ? `0${min}` : `${min}`)
         },
         stringToMin : (s) => {
-            console.log(`s=${s}`);
             
             return s.split(':').map(e=>parseInt(e)).reduce((a,b)=>a*60+b)
         }
@@ -115,7 +135,6 @@ class TableContent extends Component {
                 right: 0,
                 top: `${minHeight * (startTime - dayStartTime)}px`
             }            
-            console.log(`startTime=${startTime}, dayStartTime=${dayStartTime}, top=${courseBlockStyle.top}`)
             let courseTagStyle = {}
             let courseContentStyle = {}
             let expanded = meeting._id === this.state.popupMeeting
@@ -131,7 +150,8 @@ class TableContent extends Component {
                 }
                 courseContentStyle = {
                     minHeight: `${minHeight * (endTime - startTime) - 5}px`,
-                    background: '#18ffff',
+                    background: meeting.colors.dark,
+                    color: 'white'
                     // height: '90%'
                 }
                 this.preState.preMeeting = meeting._id
@@ -149,7 +169,10 @@ class TableContent extends Component {
                 }
                 courseContentStyle = {
                     minHeight: `${minHeight * (endTime - startTime) - 5}px`,
-                    background: '#ffffff',
+                    // background: '#ffffff',
+                    background: `${meeting.colors.medium}`,
+                    color: 'black',
+                    // border: `${meeting.colors.normal} 1px solid`
                     // height: '90%'
                 }
                 // if (this.preState.preMeeting == meeting._id) this.preState.preMeeting = undefined
@@ -195,7 +218,6 @@ class TableContent extends Component {
                 let {startTime, endTime} = conflict
                 conflict._id = `${day}-${startTime}-${endTime}`
                 conflict.meetingInfo = []
-                console.log(meetingList);
                 meetingList.filter(m=>this.helpers.stringToMin(m.meetingStart) <= startTime && this.helpers.stringToMin(m.meetingEnd) >= endTime)
                         .map(m=>{
                             conflict.meetingInfo.push({

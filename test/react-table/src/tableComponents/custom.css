@@ -51,6 +51,7 @@
     border-bottom-right-radius: 8px; */
 }
 
+
 .time-block:hover {
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.151), 0 8px 12px rgba(0, 0, 0, 0.075);
     transition-duration: 60ms;
@@ -59,4 +60,11 @@
 .time-block:active {
 
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.034), 0 8px 12px rgba(0, 0, 0, 0.041);
+}
+.MuiExpansionPanelSummary-content {
+    /* padding: 0px !important; */
+    margin: 0px !important;
+}
+.MuiExpansionPanel-root:before {
+    display: none;
 }

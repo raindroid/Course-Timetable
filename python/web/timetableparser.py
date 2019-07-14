@@ -9,10 +9,9 @@ from eng_course_finder import *
 from artsci_course_finder import *
 from utils import bcolors
 import time
+from datetime import datetime
 
-if __name__ == '__main__':
-    db = CourseDB('course')
-
+def updateDB(db: CourseDB):
     startTime = time.time()
 
     print('Start downloading course information StartTime:{}'.format(time.asctime( time.localtime(time.time()) )))
@@ -36,8 +35,11 @@ if __name__ == '__main__':
     elapsed = endTime - startTime
     print('EndTime:{}\nTime Spend:{}s'.format(time.asctime( time.localtime(time.time()) ), elapsed))
 
-    # data_file = open('../../data/samples/ENG.json', 'w')
-    # for document in db.find_col('courses', {}):
-    #     # pprint(document)
-    #     data_file.write(str(document))
-    #     break
+def updateTime(db: CourseDB):
+    db.getCol('update').update({'time': {'$regex': '.*'}}, {'$set': {'time': datetime.utcnow().isoformat()}}, upsert = True)
+
+if __name__ == '__main__':
+    
+    db = CourseDB('course')
+    updateDB(db)
+    updateTime(db)

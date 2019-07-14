@@ -38,6 +38,9 @@ class CourseDB():
 
     def update_many(self, col_name: str, query: dict, newData: dict):
         self.__mydb[col_name].update_many(query, {'$set': newData})
+    
+    def getCol(self, col_name: str):
+        return self.__mydb[col_name]
 
 
 if __name__=='__main__':

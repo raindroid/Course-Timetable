@@ -8,6 +8,7 @@ import globalVar from './global'
 import {ControlPanel} from "./conponents.js";
 import {getCookie} from "./functions.js";
 import Table from '../tableComponents/table';
+import {getColor, getColorSize} from '../colorPalette'
 
 export class ORGPage extends React.Component{
     constructor(props){
@@ -122,13 +123,21 @@ export class Page extends React.Component{
         this.state = {
             selectedCourses: [],
             selectedMeetings: [],
-            timetableRange: 'both',
+            timetableRange: 'Fall',
             highlightCourse: ''
         }
+        this.colorList = []
         this.addCourse = this.addCourse.bind(this);
         this.removeCourse = this.removeCourse.bind(this);
         this.addMeeting = this.addMeeting.bind(this)
         this.removeMeeting = this.removeMeeting.bind(this)
+        this.randomColorIndex = this.randomColorIndex.bind(this)
+        this.changeTimetableRange = this.changeTimetableRange.bind(this)
+    }
+
+    changeTimetableRange(range) {
+        let timetableRange = range
+        this.setState({timetableRange})
     }
 
     async loadDetail(newCourseObj) {
@@ -151,7 +160,6 @@ export class Page extends React.Component{
             meetingType: meetingType
         })
         this.setState({selectedMeetings:mets})
-        
     }
 
     removeMeeting(courseCode, oldMeetingCode) {
@@ -160,7 +168,24 @@ export class Page extends React.Component{
         this.setState({selectedMeetings:mets})
     }
 
+    randomColorIndex() {
+        let size = getColorSize()
+        let newColorIndex = Math.floor(Math.random()* size)
+        while (this.colorList.length < size && this.colorList.find(c=>c==newColorIndex)){
+            newColorIndex = Math.floor(Math.random()* size)
+        }
+        this.colorList.push(newColorIndex)
+        return newColorIndex
+    }
+
     addCourse(newCourseObj){
+        let colorIndex = this.randomColorIndex()
+        newCourseObj.colors = {
+            light: getColor(colorIndex, 50),
+            medium: getColor(colorIndex, 100),
+            normal: getColor(colorIndex, 300),
+            dark: getColor(colorIndex, 800)
+        }
         
         let org = this.state.selectedCourses;
         org.push(newCourseObj);
@@ -180,6 +205,9 @@ export class Page extends React.Component{
         this.setState({selectedMeetings:mets})
     }
     render(){
+        let fallClass = "d-flex px-3 ml-auto pill-left pill " + (this.state.timetableRange === 'Fall' ? 'selected' : '')
+        let winterClass = "d-flex px-3 pill-middle pill " + (this.state.timetableRange === 'Winter' ? 'selected' : '')
+        
         return(
             <div className = "d-flex flex-column h-100">
                 <div className = "nav d-none" id = "navbar">
@@ -198,11 +226,13 @@ export class Page extends React.Component{
                     <div className = "d-flex flex-column flex-grow-1 p-4">
                         <div className = "d-flex flex-row table-control pb-2 open-san mb-3">
                             <div className = "d-flex px-3 mr-3 pill selected"><div className = " m-auto">Timetable</div></div>
-                            <div className = "d-flex px-3 mr-3 pill"><div className = " m-auto">CABE</div></div>
-                            <div className = "d-flex px-3 mr-auto pill"><div className = " m-auto">Graduation req.</div></div>
+                            {/* <div className = "d-flex px-3 mr-3 pill"><div className = " m-auto">CABE</div></div>
+                            <div className = "d-flex px-3 mr-auto pill"><div className = " m-auto">Graduation req.</div></div> */}
 
-                            <div className = "d-flex px-3 ml-auto pill-left selected pill"><div className = " m-auto">Fall</div></div>
-                            <div className = "d-flex px-3 pill-middle pill"><div className = " m-auto">Winter</div></div>
+                            <div className = {fallClass}
+                                onClick={()=>this.changeTimetableRange('Fall')}><div className = " m-auto">Fall</div></div>
+                            <div className = {winterClass}
+                                onClick={()=>this.changeTimetableRange('Winter')}><div className = " m-auto">Winter</div></div>
                             <div className = "d-flex px-3 pill-right pill"><div className = " m-auto">Both</div></div>
                         </div>
                         <Table

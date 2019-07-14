@@ -125,6 +125,10 @@ class CoursePill extends React.Component{
     constructor(props){
         super(props);
         this.generateMeetings = this.generateMeetings.bind(this)
+        this.state = {
+            expanded : false
+        }
+        this.switchExpansion = this.switchExpansion.bind(this)
     }
 
     generateMeetings(course) {
@@ -159,27 +163,53 @@ class CoursePill extends React.Component{
         return buttons
     }
 
+    switchExpansion(){
+        let expanded = this.state.expanded
+        expanded = !expanded
+        this.setState({expanded})
+    }
+
     render(){
         if (this.props.position == 'cart'){
             // selected courses, show edit and delete buttons
-            // console.log('course: '+this.props.detail);
             let detail = this.props.detail
+            let panelStyle = {
+                margin: '0',
+                marginBottom: '10px',
+                padding: '0',
+                borderRadius: '2rem',
+                boxShadow: 'none',
+                border: 'none'
+            }
+            let detailStyle = {
+                boxShadow: '0 1px 15px rgba(0, 0, 0, 0.089), 0 8px 12px rgba(0, 0, 0, 0.041)',
+            }
             
             return(
-                <ExpansionPanel>
+                <ExpansionPanel 
+                    onChange={this.switchExpansion}
+                    className = "card"
+                    style={panelStyle}>
                     <ExpansionPanelSummary
                         aria-controls="panel1a-content"
                         id="panel1a-header"
+                        style={{padding: '0', margin: '0'}}
                     >
                         {/* <div className = "d-flex flex-row mb-3 course-pill">
                             <div className = "d-flex pill-left theme-neutral flex-grow-1 course-pill-code px-3 text-left h-100"><div className = "m-auto">{this.props.courseCode}</div></div>
                             <div className = "d-flex pill-right theme-danger-action pl-2 pr-3 h-100" onClick = {()=>{this.props.removeCourse(this.props.courseCode)}}><i className="fas fa-trash-alt m-auto"></i></div>
                         </div> */}
-                        <div className = "d-flex h-100"><div className = "m-auto">{this.props.courseCode}</div></div>
-                        <div className = "d-flex h-100" onClick = {()=>{this.props.removeCourse(this.props.courseCode)}}><i className="fas fa-trash-alt m-auto"></i></div>
-
+                         <div className = "d-flex flex-row m-0 course-pill w-100 p-0">
+                            <div className = "d-flex pill-left theme-neutral flex-grow-1 course-pill-code px-3 text-left h-100"><div className = "m-auto">{this.props.courseCode}</div></div>
+                            <div className = "d-flex pill-right theme-danger-action pl-2 pr-3 h-100" onClick = {()=>{this.props.removeCourse(this.props.courseCode)}}><i className="fas fa-trash-alt m-auto"></i></div>
+                        
+                            {/* <div className = "d-flex h-100"><div className = "m-auto">{this.props.courseCode}</div></div>
+                            <div className = "d-flex h-100 badge badge-pill badge-danger" onClick = {()=>{this.props.removeCourse(this.props.courseCode)}}><i className="fas fa-trash-alt m-auto"></i></div> */}
+                         </div>
+                        
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
+                    <ExpansionPanelDetails
+                        style={detailStyle}>
                         {/* <div></div> */}
                         <div className='h-100'> 
                             <h3>{detail.courseTitle || '<Unknown>'}</h3>
