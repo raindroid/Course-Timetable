@@ -286,7 +286,7 @@ export function getColorSize() {
 }
 
 export function getColor(nameOrIndex, shade) {
-  if (parseInt(nameOrIndex) != NaN) {
+  if (parseInt(nameOrIndex) === nameOrIndex) {
     let index = parseInt(nameOrIndex)
     for (let name in colors) {
       if (!index--) return colors[name]['' +shade]

@@ -45,7 +45,6 @@ export class ControlPanel extends React.Component{
         let courseList = [];
         switch (this.state.display){
             case 'cart':
-                console.log(this.props.selectedCourses);
                 for (let courseObj of this.props.selectedCourses) {
                     
                     courseList.push(<CoursePill 

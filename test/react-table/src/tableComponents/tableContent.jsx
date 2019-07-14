@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uniqid from 'uniqid'
+import {getColor, getColorSize} from '../colorPalette'
 
 class TableContent extends Component {
     state = { 
@@ -177,13 +178,31 @@ class TableContent extends Component {
                 }
                 // if (this.preState.preMeeting == meeting._id) this.preState.preMeeting = undefined
             }
+            
+            let meetingTypeStyle = {
+                
+            }
+            switch (meeting.meetingType) {
+                case 'LEC':
+                    meetingTypeStyle.background = getColor('lightblue', 600)
+                    break;
+                case 'TUT':
+                    meetingTypeStyle.background = getColor('amber', 600)
+                    break;
+                case 'PRA':
+                    meetingTypeStyle.background = getColor('pink', 600)
+                    break;
+                default:
+                    break;
+            }
+
 
             let courseTag = (
                 <div className="p-1" style={courseBlockStyle} onClick={()=>this.clickTest(meeting)} key={tagIndex++}>
                     <div  style={courseTagStyle}>
                         <div className="time-block w-100" style={courseContentStyle}>
                             <p className='m-0'>{displayMode == 'L' ? meeting.courseCode : meeting.courseCode.substr(0,6)}</p>
-                            <p className="badge badge-pill badge-info ml-2 mb-0">{meeting.meetingType}</p>
+                            <p className="badge badge-pill badge-info m-0" style={meetingTypeStyle}>{meeting.meetingType}</p>
                             <p>
                                 {(expanded) ? <span>{meeting.meetingCode}<br></br></span> : ''}
                                 {(expanded || (courseHeight > 100 && displayMode == 'L')) ? <span>{meeting.meetingStart} - {meeting.meetingEnd}<br></br></span> : ''}
