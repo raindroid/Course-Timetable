@@ -121,36 +121,50 @@ export class Page extends React.Component{
         super(props);
         this.state = {
             selectedCourses: [],
+            selectedMeetings: [],
             timetableRange: 'both',
             highlightCourse: ''
         }
         this.addCourse = this.addCourse.bind(this);
         this.removeCourse = this.removeCourse.bind(this);
+        this.addMeeting = this.addMeeting.bind(this)
+        this.removeMeeting = this.removeMeeting.bind(this)
     }
 
     async loadDetail(newCourseObj) {
         let url = `http://yucanwu.com:3000/API/courses?limit=10&code=${newCourseObj.courseName}&detail=1`
-        console.log(`load detail info from ${url}`);
         
         await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then((obj)=>{
                 // globalVar.searchCache[input] = obj;
                 document.newCourse = obj[0]
-                console.log(obj[0]);
-                
                 // Promise.resolve( obj[0] )
                 return obj[0]
 
             }).catch(err=>{console.error('Error',err)});
     }
 
-    async addCourse(newCourseObj){
-        // let course = await this.loadDetail(newCourseObj)
-        // console.log(course);
+    addMeeting(courseCode, newMeetingCode, meetingType) {
+        let mets = this.state.selectedMeetings
+        mets.push({
+            courseCode: courseCode,
+            meetingCode: newMeetingCode,
+            meetingType: meetingType
+        })
+        this.setState({selectedMeetings:mets})
+        
+    }
+
+    removeMeeting(courseCode, oldMeetingCode) {
+        let mets = this.state.selectedMeetings
+        mets = mets.filter(o=>o.courseCode !== courseCode || o.meetingCode !== oldMeetingCode)
+        this.setState({selectedMeetings:mets})
+    }
+
+    addCourse(newCourseObj){
         
         let org = this.state.selectedCourses;
         org.push(newCourseObj);
         this.setState({selectedCourses:org});
-        document.allCourse = this.state.selectedCourses
     }
     removeCourse(courseCode){
         let org = this.state.selectedCourses;
@@ -160,8 +174,10 @@ export class Page extends React.Component{
                 break;
             }
         }
+        let mets = this.state.selectedMeetings
+        mets = mets.filter(o=>o.courseCode !== courseCode)
         this.setState({selectedCourses:org});
-        document.allCourse = this.state.selectedCourses
+        this.setState({selectedMeetings:mets})
     }
     render(){
         return(
@@ -171,7 +187,13 @@ export class Page extends React.Component{
                 </div>
                 <div className = "d-flex flex-row flex-grow-1 open-san">
                     <div className = "d-flex flex-column py-4 pl-4 info-section" style = {{width:"25rem"}}>
-                        <ControlPanel selectedCourses = {this.state.selectedCourses} addCourse = {this.addCourse} removeCourse = {this.removeCourse} />
+                        <ControlPanel 
+                            selectedCourses = {this.state.selectedCourses} 
+                            addCourse = {this.addCourse} 
+                            removeCourse = {this.removeCourse} 
+                            addMeeting = {this.addMeeting}
+                            removeMeeting = {this.removeMeeting}
+                            selectedMeetings={this.state.selectedMeetings}/>
                     </div>
                     <div className = "d-flex flex-column flex-grow-1 p-4">
                         <div className = "d-flex flex-row table-control pb-2 open-san mb-3">
@@ -183,7 +205,10 @@ export class Page extends React.Component{
                             <div className = "d-flex px-3 pill-middle pill"><div className = " m-auto">Winter</div></div>
                             <div className = "d-flex px-3 pill-right pill"><div className = " m-auto">Both</div></div>
                         </div>
-                        <Table></Table>
+                        <Table
+                            selectedCourses={this.state.selectedCourses}
+                            selectedMeetings={this.state.selectedMeetings}
+                            ></Table>
                         {/* <div className = "container-card pill shadow d-flex flex-row flex-grow-1 open-san">
                             <div className = "d-flex flex-column flex-grow-1 p-4" style = {{position:"relative"}}>
                                 <div className = "d-flex flex-column">

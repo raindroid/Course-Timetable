@@ -35,12 +35,18 @@ class Table extends Component {
     }
     render() { 
         let {dimension, displayMode} = this.state
+        let {selectedCourses, selectedMeetings} = this.props
         return ( 
             <div className="d-flex flex-row m-0">
                 <TimeLabels dimension={dimension} ></TimeLabels>
                 <div className="mx-auto pt-3 d-flex flex-column justify-content-start flex-grow-1" id='col-mon'>
                     <DayLabels dimension={dimension} displayMode={displayMode}></DayLabels>
-                    <TableContent dimension={dimension} displayMode={displayMode}></TableContent>
+                    <TableContent 
+                        dimension={dimension} 
+                        displayMode={displayMode}
+                        selectedCourses={selectedCourses}
+                        selectedMeetings={selectedMeetings}
+                        ></TableContent>
                 </div>
             </div>
         );

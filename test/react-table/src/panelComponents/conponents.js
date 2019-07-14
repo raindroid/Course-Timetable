@@ -46,7 +46,16 @@ export class ControlPanel extends React.Component{
         switch (this.state.display){
             case 'cart':
                 for (let courseObj of this.props.selectedCourses) {
-                    courseList.push(<CoursePill position = 'cart' courseCode = {courseObj.courseName} key = {courseObj.courseName + " pill"} courseObj = {courseObj} removeCourse = {this.props.removeCourse} detail={courseObj}/>);
+                    courseList.push(<CoursePill 
+                        position = 'cart' 
+                        courseCode = {courseObj.courseName} 
+                        key = {courseObj.courseName + " pill"} 
+                        courseObj = {courseObj} 
+                        removeCourse = {this.props.removeCourse} 
+                        detail={courseObj}
+                        addMeeting= {this.props.addMeeting}
+                        removeMeeting={this.props.removeMeeting}
+                        selectedMeetings={this.props.selectedMeetings}/>);
                 }
                 displayInfo = 
                     <div className = "d-flex flex-column">
@@ -115,16 +124,35 @@ export class ControlPanel extends React.Component{
 class CoursePill extends React.Component{
     constructor(props){
         super(props);
+        this.generateMeetings = this.generateMeetings.bind(this)
     }
 
     generateMeetings(course) {
         let buttons = []
+        let {selectedMeetings} = this.props
+        
         for (let type in course.meetings){
             let typeMeetings = course.meetings[type]
             let typeButtons = []
             typeMeetings.forEach((meeting, index)=>{
-                let btnHtml = (<button onClick={()=>console.log('clicked a button')} className="btn btn-outline-info m-1 btn-sm" key={index}>{meeting.meetingName}</button>)
-                typeButtons.push(btnHtml)
+                
+                if (selectedMeetings.find(o=>o.courseCode === course.courseName && o.meetingCode === meeting.meetingName)) {
+                    let btnHtml = (
+                        <button 
+                            onClick={()=>this.props.removeMeeting(course.courseName, meeting.meetingName)}
+                            className="btn btn-info m-1 btn-sm" key={index}>
+                            {meeting.meetingName}
+                        </button>)
+                    typeButtons.push(btnHtml)
+                } else {
+                    let btnHtml = (
+                        <button 
+                            onClick={()=>this.props.addMeeting(course.courseName, meeting.meetingName, type)}
+                            className="btn btn-outline-info m-1 btn-sm" key={index}>
+                            {meeting.meetingName}
+                        </button>)
+                    typeButtons.push(btnHtml)
+                }
             })
             buttons.push(<div key={uniqid()}><span className="mr-2" ></span>{typeButtons} </div>)
         }
@@ -155,8 +183,8 @@ class CoursePill extends React.Component{
                         {/* <div></div> */}
                         <div className='h-100'> 
                             <h3>{detail.courseTitle || '<Unknown>'}</h3>
-                            <p dangerouslySetInnerHTML={{ __html: detail.courseDescription || 'Not Found'}}></p>
                             {this.generateMeetings(detail)}
+                            <p dangerouslySetInnerHTML={{ __html: detail.courseDescription || 'Not Found'}}></p>
                         </div>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
