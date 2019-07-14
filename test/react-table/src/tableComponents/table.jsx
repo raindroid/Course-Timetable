@@ -15,9 +15,9 @@ class Table extends Component {
 
     handleResize = () => {
         let currentState = this.state
-        if (window.innerWidth < 300) {
+        if (window.innerWidth < 400) {
             currentState.displayMode = 'S'
-        } else if (window.innerWidth < 550 ) {
+        } else if (window.innerWidth < 900 ) {
             currentState.displayMode = 'M'            
         } else {
             currentState.displayMode = 'L'            

@@ -108,7 +108,7 @@ class TableContent extends Component {
                 <div className="p-1" style={courseBlockStyle} onClick={()=>this.clickTest(meeting)} key={tagIndex++}>
                     <div  style={courseTagStyle}>
                         <div className="time-block w-100" style={courseContentStyle}>
-                            <p className='m-0'>{meeting.courseName}</p>
+                            <p className='m-0'>{displayMode == 'L' ? meeting.courseName ? meeting.courseName.substr(0,6)}</p>
                             <p className="badge badge-pill badge-info ml-2 mb-0">{meeting.meetingType}</p>
                             <p>
                                 {(expanded || (courseHeight > 100 && displayMode == 'L')) ? <span>{meeting.meetingStart} - {meeting.meeingEnd}<br></br></span> : ''}

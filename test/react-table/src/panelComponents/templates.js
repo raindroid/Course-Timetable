@@ -9,6 +9,10 @@ import {ControlPanel} from "./conponents.js";
 import {getCookie} from "./functions.js";
 import Table from '../tableComponents/table';
 import {getColor, getColorSize} from '../colorPalette'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+document.cookies = cookies
 
 export class ORGPage extends React.Component{
     constructor(props){
@@ -124,7 +128,8 @@ export class Page extends React.Component{
             selectedCourses: [],
             selectedMeetings: [],
             timetableRange: 'Fall',
-            highlightCourse: ''
+            highlightCourse: '',
+            host: 'http://yucanwu.com:3000'
         }
         this.colorList = []
         this.addCourse = this.addCourse.bind(this);
@@ -133,6 +138,67 @@ export class Page extends React.Component{
         this.removeMeeting = this.removeMeeting.bind(this)
         this.randomColorIndex = this.randomColorIndex.bind(this)
         this.changeTimetableRange = this.changeTimetableRange.bind(this)
+        this.cookiesPrepared = false
+        this.updateCookies = this.updateCookies.bind(this)
+        this.restoreCourses = this.restoreCourses.bind(this)
+        this.resotreMeetings = this.resotreMeetings.bind(this)
+    }
+
+    async componentDidMount() {
+        const time = cookies.get('updateTime');
+
+        let url = this.state.host + `/api/couses/updatetime`
+        
+        await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then(async (obj)=>{
+            const dbTime = obj.time
+            if (time != dbTime) {
+                console.log('Cleared all old data');
+                cookies.set('updateTime' , dbTime)
+                cookies.set('courses', [])
+                cookies.set('meetings', [])
+            } else {
+                let selectedCourses = cookies.get('courses') || []//.forEach(c=>await this.restoreCourses(c))
+                let selectedMeetings = cookies.get('meetings') || []
+                
+                await this.restoreCourses(selectedCourses)
+                this.resotreMeetings(selectedMeetings)
+
+                console.log('Restored all old data');
+                
+            }
+            this.cookiesPrepared = true
+        }).catch(err=>{console.error('Error',err)});
+    }
+
+    resotreMeetings(meetings) {
+        for (let i in meetings) {
+            let meeting = meetings[i];
+            
+            this.addMeeting(meeting.courseCode, meeting.meetingCode, meeting.meetingType)
+        }
+    }
+
+    async restoreCourses(courses) {
+        for (let i in courses) {
+            const course = courses[i]
+            
+            let obj = await this.loadDetail(course)
+            this.addCourse(obj)
+        }
+    }
+
+    updateCookies() {
+        if (!this.cookiesPrepared) return
+        cookies.set('courses', this.state.selectedCourses.map(c=>c.courseName))
+        // cookies.set('meetings', this.state.selectedMeetings.map(m=>`${m.courseCode}:${m.meetingCode}:${m.meetingType}`))
+        cookies.set('meetings', this.state.selectedMeetings)
+        console.log('Cookies updated');
+    }
+
+    componentDidUpdate() {
+        document.selectedCourses = this.state.selectedCourses
+        document.selectedMeetings = this.state.selectedMeetings
+        this.updateCookies()
     }
 
     changeTimetableRange(range) {
@@ -140,16 +206,19 @@ export class Page extends React.Component{
         this.setState({timetableRange})
     }
 
-    async loadDetail(newCourseObj) {
-        let url = `http://yucanwu.com:3000/API/courses?limit=10&code=${newCourseObj.courseName}&detail=1`
+    async loadDetail(courseCode) {
+        let url = this.state.host + `/API/courses?limit=1&code=${courseCode}&detail=1`
+        let course = {}
         
         await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then((obj)=>{
                 // globalVar.searchCache[input] = obj;
                 document.newCourse = obj[0]
                 // Promise.resolve( obj[0] )
-                return obj[0]
-
-            }).catch(err=>{console.error('Error',err)});
+                course = obj[0]
+                console.log(obj);
+                
+        }).catch(err=>{console.error('Error',err)});
+        return course
     }
 
     addMeeting(courseCode, newMeetingCode, meetingType) {
@@ -221,7 +290,8 @@ export class Page extends React.Component{
                             removeCourse = {this.removeCourse} 
                             addMeeting = {this.addMeeting}
                             removeMeeting = {this.removeMeeting}
-                            selectedMeetings={this.state.selectedMeetings}/>
+                            selectedMeetings={this.state.selectedMeetings}
+                            host={this.state.host}/>
                     </div>
                     <div className = "d-flex flex-column flex-grow-1 p-4">
                         <div className = "d-flex flex-row table-control pb-2 open-san mb-3">

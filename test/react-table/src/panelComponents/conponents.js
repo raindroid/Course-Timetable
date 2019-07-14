@@ -31,7 +31,7 @@ export class ControlPanel extends React.Component{
             // if the result exists in cache, use cached value
         }
         else{
-            await fetch(`http://yucanwu.com:3000/API/courses?limit=10&code=${input}&detail=1&limit=10`,{mode:'cors'}).then((response)=>{return response.json()}).then((obj)=>{
+            await fetch(this.props.host + `/API/courses?limit=10&code=${input}&detail=1&limit=10`,{mode:'cors'}).then((response)=>{return response.json()}).then((obj)=>{
                 globalVar.searchCache[input] = obj;
             }).catch(err=>{console.error('Error',err)});
             if (this.state.searchInput == input && this.state.display == 'loading'){
@@ -45,7 +45,9 @@ export class ControlPanel extends React.Component{
         let courseList = [];
         switch (this.state.display){
             case 'cart':
+                console.log(this.props.selectedCourses);
                 for (let courseObj of this.props.selectedCourses) {
+                    
                     courseList.push(<CoursePill 
                         position = 'cart' 
                         courseCode = {courseObj.courseName} 
