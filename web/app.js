@@ -103,6 +103,10 @@ app.get('/api/courses', async (req, res)=>{
 		res.send([])
 		return 
 	} 
+	var ip = req.headers['x-forwarded-for'] || 
+     req.connection.remoteAddress || 
+     req.socket.remoteAddress ||
+     (req.connection.socket ? req.connection.socket.remoteAddress : null);
 	limit = limit && parseInt(limit) || 0
 	code = code && `.*${sanitizeMongo(code).toUpperCase().trim()}.*` || '.*'
 	title = title && `.*${sanitizeMongo(title.trim())}.*` || '.*'
@@ -110,7 +114,7 @@ app.get('/api/courses', async (req, res)=>{
 	detail = detail && true || false
 
 	let courseList = await courseFind(code, limit, type, title, detail)
-	console.log(`Search for ${code}, limit=${limit}, type=${type}, title=${title}, showDetail=${detail}, format=${detail ? '{_id:0}' : '{courseName: 1, _id:0}'} resultLength=${courseList.length}, timeStamp=${new Date().toTimeString()}`)
+	console.log(`Search for ${code}, limit=${limit}, type=${type}, title=${title}, showDetail=${detail}, format=${detail ? '{_id:0}' : '{courseName: 1, _id:0}'} resultLength=${courseList.length}, timeStamp=${new Date().toTimeString()} ip=${ip}`)
 	res.send(courseList)	
 })
 

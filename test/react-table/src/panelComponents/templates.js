@@ -152,7 +152,7 @@ export class Page extends React.Component{
         await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then(async (obj)=>{
             const dbTime = obj.time
             if (time != dbTime) {
-                console.log('Cleared all old data');
+                // console.log('Cleared all old data');
                 cookies.set('updateTime' , dbTime)
                 cookies.set('courses', [])
                 cookies.set('meetings', [])
@@ -163,7 +163,7 @@ export class Page extends React.Component{
                 await this.restoreCourses(selectedCourses)
                 this.resotreMeetings(selectedMeetings)
 
-                console.log('Restored all old data');
+                // console.log('Restored all old data');
                 
             }
             this.cookiesPrepared = true
@@ -192,7 +192,7 @@ export class Page extends React.Component{
         cookies.set('courses', this.state.selectedCourses.map(c=>c.courseName))
         // cookies.set('meetings', this.state.selectedMeetings.map(m=>`${m.courseCode}:${m.meetingCode}:${m.meetingType}`))
         cookies.set('meetings', this.state.selectedMeetings)
-        console.log('Cookies updated');
+        // console.log('Cookies updated');
     }
 
     componentDidUpdate() {
@@ -215,7 +215,6 @@ export class Page extends React.Component{
                 document.newCourse = obj[0]
                 // Promise.resolve( obj[0] )
                 course = obj[0]
-                console.log(obj);
                 
         }).catch(err=>{console.error('Error',err)});
         return course
