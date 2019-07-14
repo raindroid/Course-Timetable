@@ -46,6 +46,23 @@ app.get('/test', (req, res)=>{
 	res.render("pages/test")
 })
 
+app.get('/api/couses/updatetime', (req, res)=>{
+	MongoClient.connect(dbUrl, {useNewUrlParser: true}, (err, db) => {
+		if (err) throw err;
+		var dbo = db.db("course");
+		dbo.collection("update").find(
+			{time: {'$regex': '.*', $options: 'i'}})
+		.project({_id:0})
+		.limit(1)
+		.toArray((err, result) => {
+			if (err) throw err;
+			db.close();
+			
+			res.send(result[0])	// return values
+		});
+	}); 
+})
+
 app.get('/api/courses/all', (req, res)=>{
 	Course.find({}, {courseName: 1, _id: 0}, (err, docs)=>{
 		let courses = []
@@ -96,6 +113,7 @@ app.get('/api/courses', async (req, res)=>{
 	console.log(`Search for ${code}, limit=${limit}, type=${type}, title=${title}, showDetail=${detail}, format=${detail ? '{_id:0}' : '{courseName: 1, _id:0}'} resultLength=${courseList.length}, timeStamp=${new Date().toTimeString()}`)
 	res.send(courseList)	
 })
+
 
 // 404 page not found
 app.get('*', function(req, res){
