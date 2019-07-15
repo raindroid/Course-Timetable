@@ -223,7 +223,7 @@ class TableContent extends Component {
                 // CONFLICTED
                 conflicts.push({
                     startTime: startTime,
-                    endTime: dayTime
+                    endTime: (dayTime > endTime) ? endTime: dayTime
                 })
             }
 
@@ -303,6 +303,7 @@ class TableContent extends Component {
                                 <p className='m-0'>CONCLICT</p>
                                 {/* <p className="badge badge-pill badge-info ml-2 mb-0">{meeting.meetingType}</p> */}
                                 <p>
+                                    {/* {conflict._id} */}
                                     {(expanded || (conflictHeight > 50 && displayMode == 'L')) ? 
                                         <span>{this.helpers.minToString(conflict.startTime)} - {this.helpers.minToString(conflict.endTime)}<br></br></span> : ''}
                              
