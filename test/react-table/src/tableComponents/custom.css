@@ -1,5 +1,4 @@
 * {
-    transition-duration: 200ms;
     -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
 }
 
@@ -34,11 +33,17 @@
 }
 
 #time-table {
-    margin-top: 100px;
+    /* margin-top: 100px; */
+    transition-duration: 200ms;
 }
 
 .time-gap {
     min-height: 50px;
+}
+
+.time-block-container {
+
+    transition-duration: 200ms;
 }
 
 .time-block {
@@ -50,7 +55,6 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px; */
 }
-
 
 .time-block:hover {
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.151), 0 8px 12px rgba(0, 0, 0, 0.075);

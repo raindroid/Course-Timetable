@@ -72,7 +72,7 @@ export class ControlPanel extends React.Component{
                             <hr />
                             <div className = "d-flex flex-row mb-3 course-pill theme-primary-action pill">
                                 <i className="fas fa-calendar-plus mr-2 my-auto ml-auto"></i>
-                                <div className = "my-auto mr-auto">Autofill schedule</div>  
+                                <div className = "my-auto mr-auto">Autofill schedule (not yet available)</div>  
                             </div>
                         </div>
                     </div>;
@@ -108,8 +108,10 @@ export class ControlPanel extends React.Component{
                 break;
         }
 
+        
+
         return(
-            <div className = "container-card pill shadow d-flex flex-column flex-grow-1 p-4">
+            <div className = "container-card  shadow d-flex flex-column flex-grow-1 p-4">
                 <div className = "d-flex flex-row mb-3">
                     <div className="form-label-group mb-0 flex-grow-1">
                         <input type="text" id="courseCode" className="form-control h-auto px-3 pill-left" placeholder="Course code" maxLength="30" name = "courseCode" value = {this.state.searchInput} onChange = {this.handleInput} onClick = {this.handleInput}/>

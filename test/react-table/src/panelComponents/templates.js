@@ -11,6 +11,24 @@ import Table from '../tableComponents/table';
 import {getColor, getColorSize} from '../colorPalette'
 import Cookies from 'universal-cookie';
 
+/** from material ui */
+import { fade, makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { Drawer, SwipeableDrawer, Divider } from '@material-ui/core';
+
 const cookies = new Cookies();
 document.cookies = cookies
 
@@ -129,7 +147,9 @@ export class Page extends React.Component{
             selectedMeetings: [],
             timetableRange: 'Fall',
             highlightCourse: '',
-            host: 'http://yucanwu.com:3000'
+            host: 'http://yucanwu.com:3000',
+            displayMode: 'L',
+            drawerOpen: false
         }
         this.colorList = []
         this.addCourse = this.addCourse.bind(this);
@@ -142,32 +162,56 @@ export class Page extends React.Component{
         this.updateCookies = this.updateCookies.bind(this)
         this.restoreCourses = this.restoreCourses.bind(this)
         this.resotreMeetings = this.resotreMeetings.bind(this)
+        this.handleResize = this.handleResize.bind(this)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize)
+    }
+
+    handleResize() {
+        let currentState = this.state
+        if (window.innerWidth < 300) {
+            currentState.displayMode = 'XS'
+        } else if (window.innerWidth < 500 ) {
+            currentState.displayMode = 'S'            
+        } else if (window.innerWidth < 900) {
+            currentState.displayMode = 'M'            
+        } else {
+            currentState.displayMode = 'L'
+        }
+        this.setState(currentState)
     }
 
     async componentDidMount() {
+        this.handleResize();
+        window.addEventListener('resize', this.handleResize)
+
         const time = cookies.get('updateTime');
 
         let url = this.state.host + `/api/couses/updatetime`
         
-        await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then(async (obj)=>{
-            const dbTime = obj.time
-            if (time != dbTime) {
-                // console.log('Cleared all old data');
-                cookies.set('updateTime' , dbTime)
-                cookies.set('courses', [])
-                cookies.set('meetings', [])
-            } else {
-                let selectedCourses = cookies.get('courses') || []//.forEach(c=>await this.restoreCourses(c))
-                let selectedMeetings = cookies.get('meetings') || []
-                
-                await this.restoreCourses(selectedCourses)
-                this.resotreMeetings(selectedMeetings)
+        if (!this.cookiesPrepared) {
+            await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then(async (obj)=>{
+                const dbTime = obj.time
+                if (time != dbTime) {
+                    // console.log('Cleared all old data');
+                    cookies.set('updateTime' , dbTime)
+                    cookies.set('courses', [])
+                    cookies.set('meetings', [])
+                } else {
+                    let selectedCourses = cookies.get('courses') || []//.forEach(c=>await this.restoreCourses(c))
+                    let selectedMeetings = cookies.get('meetings') || []
+                    
+                    await this.restoreCourses(selectedCourses)
+                    this.resotreMeetings(selectedMeetings)
 
-                // console.log('Restored all old data');
-                
-            }
-            this.cookiesPrepared = true
-        }).catch(err=>{console.error('Error',err)});
+                    // console.log('Restored all old data');
+                    
+                }
+                this.cookiesPrepared = true
+            }).catch(err=>{console.error('Error',err)});
+        }
     }
 
     resotreMeetings(meetings) {
@@ -272,17 +316,106 @@ export class Page extends React.Component{
         this.setState({selectedCourses:org});
         this.setState({selectedMeetings:mets})
     }
+
+    handleDrawerOpen = () => {
+        let drawerOpen = true
+        this.setState({drawerOpen})
+    }
+
+    handleDrawerClose = () => {
+        let drawerOpen = false
+        this.setState({drawerOpen})
+    }
+
     render(){
         let fallClass = "d-flex px-3 ml-auto pill-left pill " + (this.state.timetableRange === 'Fall' ? 'selected' : '')
         let winterClass = "d-flex px-3 pill-middle pill " + (this.state.timetableRange === 'Winter' ? 'selected' : '')
+        let {displayMode} = this.state
+
+        let layoutClass = "d-flex flex-grow-1 open-san " + (displayMode === 'L' ? "flex-row" : "flex-column")
         
-        return(
-            <div className = "d-flex flex-column h-100">
-                <div className = "nav d-none" id = "navbar">
-                    <div className = "m-auto title open-san text-white">LOGO</div>
+        let generateTableContent = () => {
+            return (
+                <div className = "d-flex flex-column flex-grow-1 p-4">
+                    <div className = "d-flex flex-row table-control pb-2 open-san mb-3">
+                        <div className = "d-flex px-3 mr-3 pill selected"><div className = " m-auto">Timetable</div></div>
+                        {/* <div className = "d-flex px-3 mr-3 pill"><div className = " m-auto">CABE</div></div>
+                        <div className = "d-flex px-3 mr-auto pill"><div className = " m-auto">Graduation req.</div></div> */}
+
+                        <div className = {fallClass}
+                            onClick={()=>this.changeTimetableRange('Fall')}><div className = " m-auto">Fall</div></div>
+                        <div className = {winterClass}
+                            onClick={()=>this.changeTimetableRange('Winter')}><div className = " m-auto">Winter</div></div>
+                        <div className = "d-flex px-3 pill-right pill"><div className = " m-auto">Both</div></div>
+                    </div>
+                    <Table
+                        selectedCourses={this.state.selectedCourses}
+                        selectedMeetings={this.state.selectedMeetings}
+                        displayMode={this.state.displayMode}/>
                 </div>
-                <div className = "d-flex flex-row flex-grow-1 open-san">
-                    <div className = "d-flex flex-column py-4 pl-4 info-section" style = {{width:"25rem"}}>
+            )
+        }
+
+        const drawerWidth = '100px'
+        const controlPanelStyles = {
+            root: {display: 'flex'},
+            hide: {
+                display: "none"
+            },
+            drawer: {
+                width: drawerWidth,
+                flexShrink: 0
+            },
+        }
+
+        let generateControlPanelBox = () => {
+
+            if (displayMode != 'L') {
+                return (
+                    <div style={controlPanelStyles.root}> 
+                        <AppBar
+                            position='fixed'>
+                            <Toolbar>
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="Open drawer"
+                                    onClick={this.handleDrawerOpen}
+                                    style={{display: this.state.drawerOpen && "none" || ''}}
+                                >
+                                    <MenuIcon/>
+                                </IconButton>
+                                <Typography variant="h6" noWrap>
+                                    <i className="fas fa-calendar-alt"></i> &nbsp; Timetable
+                                </Typography>
+                            </Toolbar>
+                        </AppBar>
+                        <SwipeableDrawer
+                            anchor={'left'}
+                            open={this.state.drawerOpen}
+                            onClose={this.handleDrawerClose}
+                            onOpen={this.handleDrawerOpen}
+                        >
+                            <div className={controlPanelStyles.drawer}>
+                                <div className = "d-flex flex-column py-2 pl-2 info-section" style = {{width:"25rem"}}>
+                                    <ControlPanel 
+                                        selectedCourses = {this.state.selectedCourses} 
+                                        addCourse = {this.addCourse} 
+                                        removeCourse = {this.removeCourse} 
+                                        addMeeting = {this.addMeeting}
+                                        removeMeeting = {this.removeMeeting}
+                                        selectedMeetings={this.state.selectedMeetings}
+                                        host={this.state.host}
+                                        displayMode={this.state.displayMode}/>
+                                </div>
+                            </div>
+                        </SwipeableDrawer>
+                        <hr style={{height: '32px'}}></hr>
+                    </div>
+                )
+            } else {
+                return (
+                    <div className = "d-flex flex-column py-2 pl-2 info-section" style = {{width:"25rem"}}>
                         <ControlPanel 
                             selectedCourses = {this.state.selectedCourses} 
                             addCourse = {this.addCourse} 
@@ -290,87 +423,21 @@ export class Page extends React.Component{
                             addMeeting = {this.addMeeting}
                             removeMeeting = {this.removeMeeting}
                             selectedMeetings={this.state.selectedMeetings}
-                            host={this.state.host}/>
+                            host={this.state.host}
+                            displayMode={this.state.displayMode}/>
                     </div>
-                    <div className = "d-flex flex-column flex-grow-1 p-4">
-                        <div className = "d-flex flex-row table-control pb-2 open-san mb-3">
-                            <div className = "d-flex px-3 mr-3 pill selected"><div className = " m-auto">Timetable</div></div>
-                            {/* <div className = "d-flex px-3 mr-3 pill"><div className = " m-auto">CABE</div></div>
-                            <div className = "d-flex px-3 mr-auto pill"><div className = " m-auto">Graduation req.</div></div> */}
+                )
+            }
+        }
 
-                            <div className = {fallClass}
-                                onClick={()=>this.changeTimetableRange('Fall')}><div className = " m-auto">Fall</div></div>
-                            <div className = {winterClass}
-                                onClick={()=>this.changeTimetableRange('Winter')}><div className = " m-auto">Winter</div></div>
-                            <div className = "d-flex px-3 pill-right pill"><div className = " m-auto">Both</div></div>
-                        </div>
-                        <Table
-                            selectedCourses={this.state.selectedCourses}
-                            selectedMeetings={this.state.selectedMeetings}
-                            ></Table>
-                        {/* <div className = "container-card pill shadow d-flex flex-row flex-grow-1 open-san">
-                            <div className = "d-flex flex-column flex-grow-1 p-4" style = {{position:"relative"}}>
-                                <div className = "d-flex flex-column">
-                                    <div className = "border-bottom w-100 mb-4 d-flex flex-row pl-5">
-                                        <div className = "d-flex mx-auto">Mon</div>
-                                        <div className = "d-flex mx-auto">Tue</div>
-                                        <div className = "d-flex mx-auto">Wed</div>
-                                        <div className = "d-flex mx-auto">Thur</div>
-                                        <div className = "d-flex mx-auto">Fri</div>
-                                    </div>
-                                    <div className = "border-bottom mb-time">9:00</div>
-                                    <div className = "border-bottom mb-time">10:00</div>
-                                    <div className = "border-bottom mb-time">11:00</div>
-                                    <div className = "border-bottom mb-time">12:00</div>
-                                    <div className = "border-bottom mb-time">13:00</div>
-                                    <div className = "border-bottom mb-time">14:00</div>
-                                    <div className = "border-bottom mb-time">15:00</div>
-                                    <div className = "border-bottom mb-time">16:00</div>
-                                    <div className = "border-bottom mb-time">17:00</div>
-                                    <div className = "border-bottom mb-time">18:00</div>
-                                    <div className = "border-bottom mb-time">19:00</div>
-                                    <div className = "border-bottom mb-time">20:00</div>
-                                    <div className = "border-bottom">21:00</div>
-                                </div>
-                                <div className = "d-flex flex-row h-100 w-100" style = {{position:"absolute",top:"0",bottom:"0",left:"0",right:"0",paddingLeft:"5rem",paddingRight:"1.5rem",paddingTop:"6.1rem"}}>
-                                    <div className = "flex-grow-1 monContainer" style = {{position:"relative"}} ></div>
-                                    <div className = "flex-grow-1 tueContainer" style = {{position:"relative"}} ></div>
-                                    <div className = "flex-grow-1 wedContainer" style = {{position:"relative"}}></div>
-                                    <div className = "flex-grow-1 thurContainer" style = {{position:"relative"}} ></div>
-                                    <div className = "flex-grow-1 friContainer" style = {{position:"relative"}} ></div>
-                                </div>
-                            </div>
-                            <div className = "d-flex flex-column flex-grow-1 p-4" style = {{position:"relative"}}>
-                    <div className = "border-bottom w-100 mb-4 d-flex flex-row pl-5">
-                        <div className = "d-flex mx-auto">Mon</div>
-                        <div className = "d-flex mx-auto">Tue</div>
-                        <div className = "d-flex mx-auto">Wed</div>
-                        <div className = "d-flex mx-auto">Thur</div>
-                        <div className = "d-flex mx-auto">Fri</div>
-                    </div>
-                    <div className = "border-bottom mb-time">9:00</div>
-                    <div className = "border-bottom mb-time">10:00</div>
-                    <div className = "border-bottom mb-time">11:00</div>
-                    <div className = "border-bottom mb-time">12:00</div>
-                    <div className = "border-bottom mb-time">13:00</div>
-                    <div className = "border-bottom mb-time">14:00</div>
-                    <div className = "border-bottom mb-time">15:00</div>
-                    <div className = "border-bottom mb-time">16:00</div>
-                    <div className = "border-bottom mb-time">17:00</div>
-                    <div className = "border-bottom mb-time">18:00</div>
-                    <div className = "border-bottom mb-time">19:00</div>
-                    <div className = "border-bottom mb-time">20:00</div>
-                    <div className = "border-bottom">21:00</div>
-                    <div className = "d-flex flex-row h-100 w-100" style = {{position:"absolute",top:"0",bottom:"0",left:"0",right:"0",paddingLeft:"5rem",paddingRight:"1.5rem",paddingTop:"6.1rem"}}>
-                        <div className = "flex-grow-1 monContainer" style = {{position:"relative"}} ></div>
-                        <div className = "flex-grow-1 tueContainer" style = {{position:"relative"}} ></div>
-                        <div className = "flex-grow-1 wedContainer" style = {{position:"relative"}}></div>
-                        <div className = "flex-grow-1 thurContainer" style = {{position:"relative"}} ></div>
-                        <div className = "flex-grow-1 friContainer" style = {{position:"relative"}} ></div>
-                    </div>
+        return(
+            <div className = "d-flex flex-column h-100">
+                <div className = "nav d-none" id = "navbar">
+                    <div className = "m-auto title open-san text-white">LOGO</div>
                 </div>
-        </div> */}
-                    </div>
+                <div className = {layoutClass}>
+                    {generateControlPanelBox()}
+                    {generateTableContent()}
                 </div>
             </div>
         );

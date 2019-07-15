@@ -5,12 +5,14 @@ class DayLabels extends Component {
 
     dayNames = {
         L: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        M: ['Mon', 'Tue', "Wed", "Thu", 'Fri'],
-        S: ['M', 'T', "W", "T", "F"]
+        M: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        S: ['Mon', 'Tue', "Wed", "Thu", 'Fri'],
+        XS: ['M', 'T', "W", "T", "F"]
     }
 
     renderDayNames = (displayMode) => {
         let dayLabels = []
+        console.log(displayMode);
         for (let day = 0; day < 5; day ++) {
             
             let label = (

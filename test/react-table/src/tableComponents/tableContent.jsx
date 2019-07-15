@@ -119,8 +119,8 @@ class TableContent extends Component {
                 let gapTag = (
                     <div className="p-0 m-0" style={tagBlockStyle} key={tagIndex++}>
                         <div className="h-100" style={{textAlign: "center", lineHeight: gapHeight}}>
-                            {(dayTime != startHour * 60 && displayMode == 'L') ? `${(startTime - dayTime) / 60} hour(s) gap` : ''}
-                            {(dayTime != startHour * 60 && displayMode == 'M') ? `${(startTime - dayTime) / 60} h gap` : ''}
+                            {(dayTime != startHour * 60 && displayMode === 'L') ? `${(startTime - dayTime) / 60} hour(s) gap` : ''}
+                            {(dayTime != startHour * 60 && displayMode === 'M') ? `${(startTime - dayTime) / 60} h gap` : ''}
                         </div>
                     </div>
                 )
@@ -198,10 +198,10 @@ class TableContent extends Component {
 
 
             let courseTag = (
-                <div className="p-1" style={courseBlockStyle} onClick={()=>this.clickTest(meeting)} key={tagIndex++}>
-                    <div  style={courseTagStyle}>
+                <div className="p-1 " style={courseBlockStyle} onClick={()=>this.clickTest(meeting)} key={tagIndex++}>
+                    <div className='time-block-container' style={courseTagStyle}>
                         <div className="time-block w-100" style={courseContentStyle}>
-                            <p className='m-0'>{displayMode == 'L' ? meeting.courseCode : meeting.courseCode.substr(0,6)}</p>
+                            <p className='m-0'>{(displayMode === 'M' || displayMode === 'L') ? meeting.courseCode : meeting.courseCode.substr(0,6)}</p>
                             <p className="badge badge-pill badge-info m-0" style={meetingTypeStyle}>{meeting.meetingType}</p>
                             <p>
                                 {(expanded) ? <span>{meeting.meetingCode}<br></br></span> : ''}
@@ -240,7 +240,7 @@ class TableContent extends Component {
                 meetingList.filter(m=>this.helpers.stringToMin(m.meetingStart) <= startTime && this.helpers.stringToMin(m.meetingEnd) >= endTime)
                         .map(m=>{
                             conflict.meetingInfo.push({
-                                name: `${m.courseCode}-${m.meetingCode}`,
+                                name: `${displayMode == 'L' ? m.courseCode : m.courseCode.substr(0,6)}-${m.meetingCode}`,
                                 type: m.meetingType
                             })
                         })

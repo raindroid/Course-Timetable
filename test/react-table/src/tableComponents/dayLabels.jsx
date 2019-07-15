@@ -5,8 +5,9 @@ class DayLabels extends Component {
 
     dayNames = {
         L: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        M: ['Mon', 'Tue', "Wed", "Thu", 'Fri'],
-        S: ['M', 'T', "W", "T", "F"]
+        M: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        S: ['Mon', 'Tue', "Wed", "Thu", 'Fri'],
+        XS: ['M', 'T', "W", "T", "F"]
     }
 
     renderDayNames = (displayMode) => {
