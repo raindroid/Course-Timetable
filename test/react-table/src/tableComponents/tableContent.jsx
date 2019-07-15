@@ -39,31 +39,35 @@ class TableContent extends Component {
                 // _id: `${courseCode}-${meetingCode}`, 
                 courseCode: courseCode, 
                 courseName: course.courseTitle, 
+                courseType: course.courseType,
                 meetingCode: meetingCode, 
                 meetingType: meetingType,
                 colors: course.colors
             }
-            
-            detail.forEach(m=>{
-                meeting._id = `${id_cnt ++}`
-                meeting.meetingStart = m.meetingStartTime
-                meeting.meetingEnd = m.meetingEndTime
-                meeting.meetingLocation = m.meetingLocation || m.assignedRoom1
-                meeting.day = m.meetingDay
-                // check for duplications
-                let preMeeting = this.meetings.find(pm=>
-                    pm.meetingStart === meeting.meetingStart && 
-                    pm.meetingEnd === meeting.meetingEnd && 
-                    pm.day == meeting.day &&
-                    pm.courseCode === meeting.courseCode &&
-                    pm.meetingCode === meeting.meetingCode)
-                if (preMeeting) {
-                    preMeeting.meetingLocation += ' / ' + meeting.meetingLocation
-                    
-                } else {
-                    this.meetings.push(Object.assign({}, meeting))
-                }
-            })
+
+            // if (this.pro)
+            if (this.props.filter.find(t=>t===course.courseType)) {   
+                detail.forEach(m=>{
+                    meeting._id = `${id_cnt ++}`
+                    meeting.meetingStart = m.meetingStartTime
+                    meeting.meetingEnd = m.meetingEndTime
+                    meeting.meetingLocation = m.meetingLocation || m.assignedRoom1
+                    meeting.day = m.meetingDay
+                    // check for duplications
+                    let preMeeting = this.meetings.find(pm=>
+                        pm.meetingStart === meeting.meetingStart && 
+                        pm.meetingEnd === meeting.meetingEnd && 
+                        pm.day == meeting.day &&
+                        pm.courseCode === meeting.courseCode &&
+                        pm.meetingCode === meeting.meetingCode)
+                    if (preMeeting) {
+                        preMeeting.meetingLocation += ' / ' + meeting.meetingLocation
+                        
+                    } else {
+                        this.meetings.push(Object.assign({}, meeting))
+                    }
+                })
+            }
         })
     }
 
@@ -119,8 +123,8 @@ class TableContent extends Component {
                 let gapTag = (
                     <div className="p-0 m-0" style={tagBlockStyle} key={tagIndex++}>
                         <div className="h-100" style={{textAlign: "center", lineHeight: gapHeight}}>
-                            {(dayTime != startHour * 60 && displayMode === 'L') ? `${(startTime - dayTime) / 60} hour(s) gap` : ''}
-                            {(dayTime != startHour * 60 && displayMode === 'M') ? `${(startTime - dayTime) / 60} h gap` : ''}
+                            {(dayTime != startHour * 60 && (displayMode === 'L' || displayMode === 'M')) ? `${(startTime - dayTime) / 60} hour(s) gap` : ''}
+                            {(dayTime != startHour * 60 && displayMode === 'S') ? `${(startTime - dayTime) / 60} h gap` : ''}
                         </div>
                     </div>
                 )
@@ -204,7 +208,7 @@ class TableContent extends Component {
                             <p className='m-0'>{(displayMode === 'M' || displayMode === 'L') ? meeting.courseCode : meeting.courseCode.substr(0,6)}</p>
                             <p className="badge badge-pill badge-info m-0" style={meetingTypeStyle}>{meeting.meetingType}</p>
                             <p>
-                                {(expanded) ? <span>{meeting.meetingCode}<br></br></span> : ''}
+                                {((expanded || (courseHeight > 50))) ? <span>{meeting.meetingCode}<br></br></span> : ''}
                                 {(expanded || (courseHeight > 100 && displayMode == 'L')) ? <span>{meeting.meetingStart} - {meeting.meetingEnd}<br></br></span> : ''}
                                 {(expanded) ? <span>{meeting.meetingLocation}</span> : ''}
                             </p>

@@ -52,7 +52,7 @@ export class ORGPage extends React.Component{
     render(){
         return(
             <div className = "d-flex flex-row h-100">
-                <div className = "d-flex flex-column p-4" style = {{width:"25rem",backgroundColor:"#ebf4ff"}}>
+                <div className = "d-flex flex-column p-4" style = {{width:"20rem",backgroundColor:"#ebf4ff"}}>
                     <div class="form-group">
                         <label for="course_name">Name</label>
                         <input type="text" class="form-control" id="course_name" placeholder="ECE110" defaultValue = "ECE110"/>
@@ -266,8 +266,10 @@ export class Page extends React.Component{
 
     addMeeting(courseCode, newMeetingCode, meetingType) {
         let mets = this.state.selectedMeetings
+        // let courseType = this.state.selectedCourses.find(c=>c.courseCode === courseCode).courseType
         mets.push({
             courseCode: courseCode,
+            // courseType: 
             meetingCode: newMeetingCode,
             meetingType: meetingType
         })
@@ -340,7 +342,7 @@ export class Page extends React.Component{
             let drawerInContent = <div></div>
             if (displayMode == 'L') {
                 drawerInContent = (
-                    <div className = "d-flex flex-column p-0 info-section" style = {{width:"25rem"}}>
+                    <div className = "d-flex flex-column p-0 info-section" style = {{width:"20rem"}}>
                         <hr style={{height:'30px'}}></hr>
                         <ControlPanel 
                             selectedCourses = {this.state.selectedCourses} 
@@ -354,15 +356,31 @@ export class Page extends React.Component{
                     </div>
                 )
             }
+            let tables = []
+            if (this.state.timetableRange === 'Fall' || this.state.timetableRange === 'Both') {
+                tables.push( <Table
+                    key='fallTable'
+                    type='Fall'
+                    filter={['F', 'Y']}
+                    selectedCourses={this.state.selectedCourses}
+                    selectedMeetings={this.state.selectedMeetings}
+                displayMode={this.state.displayMode}/> )
+            }
+            if (this.state.timetableRange === 'Winter' || this.state.timetableRange === 'Both') {
+                tables.push( <Table
+                    key='winterTable'
+                    type='Winter'
+                    filter={['S', 'Y']}
+                    selectedCourses={this.state.selectedCourses}
+                    selectedMeetings={this.state.selectedMeetings}
+                displayMode={this.state.displayMode}/> )
+            }
             return (
                 <div>
                     <div className='d-flex flex-row'>
                         {drawerInContent}
                         <div className = "d-flex flex-column flex-grow-1 p-4" style={{}}>
-                            <Table
-                                selectedCourses={this.state.selectedCourses}
-                                selectedMeetings={this.state.selectedMeetings}
-                                displayMode={this.state.displayMode}/>
+                            {tables}
                         </div>
                     </div>
                 </div>
@@ -414,7 +432,7 @@ export class Page extends React.Component{
                     onOpen={this.handleDrawerOpen}
                 >
                     <div style={controlPanelStyles.drawer}>
-                        <div className = "d-flex flex-column p-0 info-section" style = {{width:"25rem"}}>
+                        <div className = "d-flex flex-column p-0 info-section" style = {{width:"20rem"}}>
                             <ControlPanel 
                                 selectedCourses = {this.state.selectedCourses} 
                                 addCourse = {this.addCourse} 

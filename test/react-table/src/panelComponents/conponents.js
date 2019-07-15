@@ -70,10 +70,10 @@ export class ControlPanel extends React.Component{
                                 </div>
                             }
                             <hr />
-                            <div className = "d-flex flex-row mb-3 course-pill theme-primary-action pill">
-                                <i className="fas fa-calendar-plus mr-2 my-auto ml-auto"></i>
-                                <div className = "my-auto mr-auto">Autofill schedule (not yet available)</div>  
-                            </div>
+                            {/* <div className = "d-flex flex-row mb-3 course-pill theme-primary-action pill"> */}
+                                {/* <i className="fas fa-calendar-plus mr-2 my-auto ml-auto"></i> */}
+                                {/* <div className = "my-auto mr-auto">Autofill schedule (not yet available)</div>   */}
+                            {/* </div> */}
                         </div>
                     </div>;
                 break;
@@ -114,11 +114,11 @@ export class ControlPanel extends React.Component{
             <div className = "container-card  shadow d-flex flex-column flex-grow-1 p-4">
                 <div className = "d-flex flex-row mb-3">
                     <div className="form-label-group mb-0 flex-grow-1">
-                        <input type="text" id="courseCode" className="form-control h-auto px-3 pill-left" placeholder="Course code" maxLength="30" name = "courseCode" value = {this.state.searchInput} onChange = {this.handleInput} onClick = {this.handleInput}/>
+                        <input type="text" id="courseCode" className="form-control h-auto px-3 pill-left" placeholder="Course code"  name = "courseCode" value = {this.state.searchInput} onChange = {this.handleInput} onClick = {this.handleInput}/>
                         <label htmlFor="courseCode" className = "px-3 d-flex"><i className = "fas fa-search my-auto mr-1"/>Course code</label>
                     </div>
-                    <div className = "d-flex px-3 pill-right cart-number theme-primary-action" onClick = {()=>{this.setState({display:'cart'})}}><i className = "fas fa-shopping-cart my-auto ml-auto mr-1"/><div className = "my-auto mr-auto">{this.props.selectedCourses.length}</div></div>
-                </div>
+                     <div className = "d-flex px-3 pill-right cart-number theme-primary-action" onClick = {()=>{this.setState({display:'cart'})}}><i className = "fas fa-shopping-cart my-auto ml-auto mr-1"/><div className = "my-auto mr-auto">{this.props.selectedCourses.length}</div></div>
+                    </div>
                 {displayInfo}
             </div>
         )
