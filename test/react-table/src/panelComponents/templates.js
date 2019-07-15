@@ -379,7 +379,7 @@ export class Page extends React.Component{
                 <div>
                     <div className='d-flex flex-row'>
                         {drawerInContent}
-                        <div className = "d-flex flex-column flex-grow-1 p-4" style={{}}>
+                        <div className = "d-flex flex-column flex-grow-1 p-1 pt-4 " style={{}}>
                             {tables}
                         </div>
                     </div>

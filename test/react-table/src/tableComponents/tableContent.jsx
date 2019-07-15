@@ -208,7 +208,7 @@ class TableContent extends Component {
                             <p className='m-0'>{(displayMode === 'M' || displayMode === 'L') ? meeting.courseCode : meeting.courseCode.substr(0,6)}</p>
                             <p className="badge badge-pill badge-info m-0" style={meetingTypeStyle}>{meeting.meetingType}</p>
                             <p>
-                                {((expanded || (courseHeight > 50))) ? <span>{meeting.meetingCode}<br></br></span> : ''}
+                                {((expanded || (courseHeight > 50))) ? <span>{meeting.meetingCode.substr(3)}<br></br></span> : ''}
                                 {(expanded || (courseHeight > 100 && displayMode == 'L')) ? <span>{meeting.meetingStart} - {meeting.meetingEnd}<br></br></span> : ''}
                                 {(expanded) ? <span>{meeting.meetingLocation}</span> : ''}
                             </p>
