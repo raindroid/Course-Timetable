@@ -184,21 +184,21 @@ class TableContent extends Component {
             }
             
             let meetingTypeStyle = {
-                
+                background: this.props.typeColors[meeting.meetingType]   
             }
-            switch (meeting.meetingType) {
-                case 'LEC':
-                    meetingTypeStyle.background = getColor('lightblue', 600)
-                    break;
-                case 'TUT':
-                    meetingTypeStyle.background = getColor('amber', 600)
-                    break;
-                case 'PRA':
-                    meetingTypeStyle.background = getColor('pink', 600)
-                    break;
-                default:
-                    break;
-            }
+            // switch (meeting.meetingType) {
+            //     case 'LEC':
+            //         meetingTypeStyle.background = getColor('lightblue', 600)
+            //         break;
+            //     case 'TUT':
+            //         meetingTypeStyle.background = getColor('amber', 600)
+            //         break;
+            //     case 'PRA':
+            //         meetingTypeStyle.background = getColor('pink', 600)
+            //         break;
+            //     default:
+            //         break;
+            // }
 
 
             let courseTag = (

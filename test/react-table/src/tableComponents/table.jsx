@@ -9,13 +9,14 @@ class Table extends Component {
         dimension: {
             dayLabelHeight: '40px',
             minHeight: 1.23
+
         }
     }
 
     
     render() { 
         let {dimension} = this.state
-        let {selectedCourses, selectedMeetings, displayMode, type, filter} = this.props
+        let {selectedCourses, selectedMeetings, displayMode, type, filter, typeColors} = this.props
         return ( 
             <div className="d-flex flex-row m-0" id="time-table">
                 <TimeLabels dimension={dimension} ></TimeLabels>
@@ -25,6 +26,7 @@ class Table extends Component {
                         type={type}
                         filter={filter}
                         dimension={dimension} 
+                        typeColors={typeColors}
                         displayMode={displayMode}
                         selectedCourses={selectedCourses}
                         selectedMeetings={selectedMeetings}

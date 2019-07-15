@@ -27,7 +27,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Drawer, SwipeableDrawer, Divider, Grid, ButtonGroup, Button } from '@material-ui/core';
+import { TextField, Drawer, SwipeableDrawer, Divider, Grid, ButtonGroup, Button } from '@material-ui/core';
 
 const cookies = new Cookies();
 document.cookies = cookies
@@ -149,7 +149,12 @@ export class Page extends React.Component{
             highlightCourse: '',
             host: 'http://yucanwu.com:3000',
             displayMode: 'L',
-            drawerOpen: false
+            drawerOpen: false,
+            typeColors:{
+                'LEC': getColor('lightblue', 600),
+                'TUT': getColor('amber', 600),
+                'PRA': getColor('pink', 600)
+            }
         }
         this.colorList = []
         this.addCourse = this.addCourse.bind(this);
@@ -359,6 +364,7 @@ export class Page extends React.Component{
             let tables = []
             if (this.state.timetableRange === 'Fall' || this.state.timetableRange === 'Both') {
                 tables.push( <Table
+                    typeColors={this.state.typeColors}
                     key='fallTable'
                     type='Fall'
                     filter={['F', 'Y']}
@@ -368,6 +374,7 @@ export class Page extends React.Component{
             }
             if (this.state.timetableRange === 'Winter' || this.state.timetableRange === 'Both') {
                 tables.push( <Table
+                    typeColors={this.state.typeColors}
                     key='winterTable'
                     type='Winter'
                     filter={['S', 'Y']}
@@ -494,6 +501,7 @@ export class Page extends React.Component{
                 <div className = {layoutClass}>
                     {generateAppBar()}
                     {generateTableContent()}
+
                 </div>
             </div>
         );
