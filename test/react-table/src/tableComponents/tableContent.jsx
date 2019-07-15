@@ -227,7 +227,7 @@ class TableContent extends Component {
                 })
             }
 
-            dayTime = endTime;
+            dayTime = (dayTime < endTime) ? endTime: dayTime;
         });
 
         /** NOTE handling the conflicts */
