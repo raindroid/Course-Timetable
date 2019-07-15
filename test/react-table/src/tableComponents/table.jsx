@@ -8,7 +8,7 @@ class Table extends Component {
     state = { 
         dimension: {
             dayLabelHeight: '40px',
-            minHeight: 1.1
+            minHeight: 1.18
         }
     }
 
