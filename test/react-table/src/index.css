@@ -15,3 +15,13 @@ code {
 .MuiToolbar-root {
   background: #2196f3
 }
+
+.unselected {
+  background: #82b1ff !important;
+  border: none;
+}
+
+.selected {
+  background: #002fff !important;
+  border: none;
+}

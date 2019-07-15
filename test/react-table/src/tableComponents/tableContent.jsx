@@ -147,7 +147,7 @@ class TableContent extends Component {
                     right: '0px',
                     top: '0px',
                     height: `${minHeight * (endTime - startTime) + 120}px`,
-                    zIndex: 1
+                    zIndex: 5
                 }
                 courseContentStyle = {
                     minHeight: `${minHeight * (endTime - startTime) - 5}px`,

@@ -27,7 +27,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Drawer, SwipeableDrawer, Divider } from '@material-ui/core';
+import { Drawer, SwipeableDrawer, Divider, Grid, ButtonGroup, Button } from '@material-ui/core';
 
 const cookies = new Cookies();
 document.cookies = cookies
@@ -328,94 +328,20 @@ export class Page extends React.Component{
     }
 
     render(){
-        let fallClass = "d-flex px-3 ml-auto pill-left pill " + (this.state.timetableRange === 'Fall' ? 'selected' : '')
-        let winterClass = "d-flex px-3 pill-middle pill " + (this.state.timetableRange === 'Winter' ? 'selected' : '')
+        let fallClass = "d-flex px-3 ml-auto pill-left pill " + (this.state.timetableRange === 'Fall' ? 'selected' : 'unselected')
+        let bothClass = "d-flex px-3 pill-middle pill " + (this.state.timetableRange === 'Both' ? 'selected' : 'unselected')
+        let winterClass = "d-flex px-3 pill-right pill " + (this.state.timetableRange === 'Winter' ? 'selected' : 'unselected')
         let {displayMode} = this.state
 
-        let layoutClass = "d-flex flex-grow-1 open-san " + (displayMode === 'L' ? "flex-row" : "flex-column")
+        let layoutClass = "d-flex flex-grow-1 open-san " + (displayMode === 'Lp' ? "flex-row" : "flex-column")
         
-        let generateTableContent = () => {
-            return (
-                <div className = "d-flex flex-column flex-grow-1 p-4">
-                    <div className = "d-flex flex-row table-control pb-2 open-san mb-3">
-                        <div className = "d-flex px-3 mr-3 pill selected"><div className = " m-auto">Timetable</div></div>
-                        {/* <div className = "d-flex px-3 mr-3 pill"><div className = " m-auto">CABE</div></div>
-                        <div className = "d-flex px-3 mr-auto pill"><div className = " m-auto">Graduation req.</div></div> */}
-
-                        <div className = {fallClass}
-                            onClick={()=>this.changeTimetableRange('Fall')}><div className = " m-auto">Fall</div></div>
-                        <div className = {winterClass}
-                            onClick={()=>this.changeTimetableRange('Winter')}><div className = " m-auto">Winter</div></div>
-                        <div className = "d-flex px-3 pill-right pill"><div className = " m-auto">Both</div></div>
-                    </div>
-                    <Table
-                        selectedCourses={this.state.selectedCourses}
-                        selectedMeetings={this.state.selectedMeetings}
-                        displayMode={this.state.displayMode}/>
-                </div>
-            )
-        }
-
         const drawerWidth = '100px'
-        const controlPanelStyles = {
-            root: {display: 'flex'},
-            hide: {
-                display: "none"
-            },
-            drawer: {
-                width: drawerWidth,
-                flexShrink: 0
-            },
-        }
-
-        let generateControlPanelBox = () => {
-
-            if (displayMode != 'L') {
-                return (
-                    <div style={controlPanelStyles.root}> 
-                        <AppBar
-                            position='fixed'>
-                            <Toolbar>
-                                <IconButton
-                                    edge="start"
-                                    color="inherit"
-                                    aria-label="Open drawer"
-                                    onClick={this.handleDrawerOpen}
-                                    style={{display: this.state.drawerOpen && "none" || ''}}
-                                >
-                                    <MenuIcon/>
-                                </IconButton>
-                                <Typography variant="h6" noWrap>
-                                    <i className="fas fa-calendar-alt"></i> &nbsp; Timetable
-                                </Typography>
-                            </Toolbar>
-                        </AppBar>
-                        <SwipeableDrawer
-                            anchor={'left'}
-                            open={this.state.drawerOpen}
-                            onClose={this.handleDrawerClose}
-                            onOpen={this.handleDrawerOpen}
-                        >
-                            <div className={controlPanelStyles.drawer}>
-                                <div className = "d-flex flex-column py-2 pl-2 info-section" style = {{width:"25rem"}}>
-                                    <ControlPanel 
-                                        selectedCourses = {this.state.selectedCourses} 
-                                        addCourse = {this.addCourse} 
-                                        removeCourse = {this.removeCourse} 
-                                        addMeeting = {this.addMeeting}
-                                        removeMeeting = {this.removeMeeting}
-                                        selectedMeetings={this.state.selectedMeetings}
-                                        host={this.state.host}
-                                        displayMode={this.state.displayMode}/>
-                                </div>
-                            </div>
-                        </SwipeableDrawer>
-                        <hr style={{height: '32px'}}></hr>
-                    </div>
-                )
-            } else {
-                return (
-                    <div className = "d-flex flex-column py-2 pl-2 info-section" style = {{width:"25rem"}}>
+        let generateTableContent = () => {
+            let drawerInContent = <div></div>
+            if (displayMode == 'L') {
+                drawerInContent = (
+                    <div className = "d-flex flex-column p-0 info-section" style = {{width:"25rem"}}>
+                        <hr style={{height:'30px'}}></hr>
                         <ControlPanel 
                             selectedCourses = {this.state.selectedCourses} 
                             addCourse = {this.addCourse} 
@@ -428,15 +354,127 @@ export class Page extends React.Component{
                     </div>
                 )
             }
+            return (
+                <div>
+                    <div className='d-flex flex-row'>
+                        {drawerInContent}
+                        <div className = "d-flex flex-column flex-grow-1 p-4" style={{}}>
+                            <Table
+                                selectedCourses={this.state.selectedCourses}
+                                selectedMeetings={this.state.selectedMeetings}
+                                displayMode={this.state.displayMode}/>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
+        const controlPanelStyles = {
+            root: {
+                display: 'flex',
+                flexGrow: 1
+            },
+            appBar: {
+            },
+            iconMenu: {
+                display: this.state.drawerOpen && "none" || '',
+                marginRight: '8px'
+            },
+            drawer: {
+                // width: drawerWidth,
+                flexShrink: 0
+            },
+            title: {
+                flexGrow: 1
+            },
+            btnGroup: {
+                boxShadow: 'none'
+            }
+        }
+
+        let generateAppBar = () => {
+            let drawerInAppBar = <span></span>
+            let iconButton = (<span></span>)
+            let iconTimetable = <i className="fas fa-calendar-alt"></i> 
+            if (displayMode != 'L') {
+                iconButton = (
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="Open drawer"
+                        onClick={this.handleDrawerOpen}
+                        style={controlPanelStyles.iconMenu}
+                    >
+                        <MenuIcon/>
+                    </IconButton>)
+                drawerInAppBar = (<SwipeableDrawer
+                    anchor={'left'}
+                    open={this.state.drawerOpen}
+                    onClose={this.handleDrawerClose}
+                    onOpen={this.handleDrawerOpen}
+                >
+                    <div style={controlPanelStyles.drawer}>
+                        <div className = "d-flex flex-column p-0 info-section" style = {{width:"25rem"}}>
+                            <ControlPanel 
+                                selectedCourses = {this.state.selectedCourses} 
+                                addCourse = {this.addCourse} 
+                                removeCourse = {this.removeCourse} 
+                                addMeeting = {this.addMeeting}
+                                removeMeeting = {this.removeMeeting}
+                                selectedMeetings={this.state.selectedMeetings}
+                                host={this.state.host}
+                                displayMode={this.state.displayMode}/>
+                        </div>
+                    </div>
+                </SwipeableDrawer>)
+            } 
+            if (displayMode === 'S') {
+                iconTimetable = <span></span>
+            }
+             {
+                return (
+                    <div style={controlPanelStyles.root}> 
+                        <AppBar
+                            style={controlPanelStyles.appBar}
+                            position='fixed'>
+                            <Toolbar>
+                                {iconButton}
+                                <Typography variant="h6" style={controlPanelStyles.title}>
+                                    {iconTimetable} &nbsp; Timetable
+                                </Typography>
+                                <Grid item>
+                                    <ButtonGroup  
+                                        style={controlPanelStyles.btnGroup}
+                                        variant="contained"
+                                        color="primary"
+                                        aria-label="Full-width contained primary button group"
+                                        >
+                                        <Button className={fallClass} 
+                                            onClick={()=>this.changeTimetableRange('Fall')}>Fall</Button>
+                                        <Button
+                                            className={bothClass}
+                                            onClick={()=>this.changeTimetableRange('Both')}>Both</Button>
+                                        <Button 
+                                            className={winterClass}
+                                            onClick={()=>this.changeTimetableRange('Winter')}>Winter</Button>
+                                    </ButtonGroup>
+                                </Grid>
+                            </Toolbar>
+                        </AppBar>
+                        {drawerInAppBar}
+                        <hr style={{}}></hr>
+                    </div>
+                )
+            }
         }
 
         return(
             <div className = "d-flex flex-column h-100">
-                <div className = "nav d-none" id = "navbar">
+                {/* <div className = "nav d-none" id = "navbar">
                     <div className = "m-auto title open-san text-white">LOGO</div>
-                </div>
+                </div> */}
                 <div className = {layoutClass}>
-                    {generateControlPanelBox()}
+                    {generateAppBar()}
                     {generateTableContent()}
                 </div>
             </div>
