@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "react-scripts build && cp -rf build/* ../../web/public/ && cd ../../web && mv public/index.html views/index.ejs && nodemon app.js"
   },
   "eslintConfig": {
     "extends": "react-app"

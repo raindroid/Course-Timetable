@@ -38,7 +38,7 @@ var courseSchema = new mongoose.Schema({
 var Course = mongoose.model('course', courseSchema)
 
 app.get("/", (req, res)=>{
-	res.render("pages/index");
+	res.render("index");
 });
 
 // API test page
