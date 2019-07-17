@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="description" content="Timetable test">
+      <link rel="icon" type="image/png" href="./cal.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="theme-color" content="#2196f3">
+      <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d2e8840b0bf46c9"></script>
+      <link rel="stylesheet" href="./css/reset.css">
+      <link rel="stylesheet" href="./css/bootstrap.min.css?v=1">
+      <link rel="stylesheet" href="./css/custom.css?v=1">
+      <link rel="stylesheet" href="./css/animation.css?v=1">
+      <link rel="stylesheet" href="./css/fontawesome-all.min.css?v=1">
+      <link rel="stylesheet" href="./css/floating_label.css?v=1">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto|Source+Sans+Pro|Raleway|Lato|Noto+Sans" rel="stylesheet">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+      <title>Timetable test</title> 
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+      <script> window.profileId = <%=profileId%> </script>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
