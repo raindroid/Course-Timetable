@@ -8,16 +8,20 @@ var express 	= require("express"),
 	app 		= express(),
 	config		= require('./config.json'),
 	cors 		= require('cors'),
-	sanitizeMongo	= require('mongo-sanitize')
+	sanitizeMongo	= require('mongo-sanitize'),
+	uniqId 		= require('uniqid')
 
 // import config from './config'
 
 var dbUrl = "mongodb://localhost:27017/"
 mongoose.connect(dbUrl + 'course', {useNewUrlParser: true});
-app.set("view engine", "ejs");
-app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
+// app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.set("view engine", "ejs");
 app.use(cors());
+app.use(express.static("public"));
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
 
 var courseSchema = new mongoose.Schema({
 	courseName: String,
@@ -36,6 +40,14 @@ var courseSchema = new mongoose.Schema({
 	}]
 })
 var Course = mongoose.model('course', courseSchema)
+
+var profileSchema = new mongoose.Schema({
+	id: String,
+	data: String,
+	ip: String,
+	createTime: String
+})
+var Profile = mongoose.model('profile', profileSchema)
 
 app.get("/", (req, res)=>{
 	res.render("index");
@@ -116,6 +128,29 @@ app.get('/api/courses', async (req, res)=>{
 	let courseList = await courseFind(code, limit, type, title, detail)
 	console.log(`Search for ${code}, limit=${limit}, type=${type}, title=${title}, showDetail=${detail}, format=${detail ? '{_id:0}' : '{courseName: 1, _id:0}'} resultLength=${courseList.length}, timeStamp=${new Date().toTimeString()} ip=${ip}`)
 	res.send(courseList)	
+})
+
+app.post('/api/save', (req, res) => {
+	let {selectedCourses, selectedMeetings} = req.body
+	console.log('Save req received');
+	let uniqid = uniqId.time()
+	var ip = req.headers['x-forwarded-for'] || 
+     req.connection.remoteAddress || 
+     req.socket.remoteAddress ||
+     (req.connection.socket ? req.connection.socket.remoteAddress : null);
+	
+	Profile.updateOne(
+		{id: uniqid}, 
+		{id: uniqid, data: JSON.stringify(req.body), ip: ip}, 
+		{upsert: true, setDefaultsOnInsert: true}, 
+		e=>{
+			console.log(uniqid);
+			res.send({id: uniqid})
+		});
+})
+
+app.post('/api/profile', (req, res)=>{
+	let {profileid} = req.body
 })
 
 

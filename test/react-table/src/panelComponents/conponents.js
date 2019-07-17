@@ -92,7 +92,6 @@ export class ControlPanel extends React.Component{
                         </div>
                     </div>;
                 break;
-                break;
             case 'detail':
                 break;
             case 'loading':
@@ -120,6 +119,7 @@ export class ControlPanel extends React.Component{
                      <div className = "d-flex px-3 pill-right cart-number theme-primary-action" onClick = {()=>{this.setState({display:'cart'})}}><i className = "fas fa-shopping-cart my-auto ml-auto mr-1"/><div className = "my-auto mr-auto">{this.props.selectedCourses.length}</div></div>
                     </div>
                 {displayInfo}
+                <Button variant='outlined' onClick={this.props.saveProfile}>Save</Button>
             </div>
         )
     }

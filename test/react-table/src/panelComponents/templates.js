@@ -168,6 +168,8 @@ export class Page extends React.Component{
         this.restoreCourses = this.restoreCourses.bind(this)
         this.resotreMeetings = this.resotreMeetings.bind(this)
         this.handleResize = this.handleResize.bind(this)
+        this.updateLocalStorage = this.updateLocalStorage.bind(this)
+        this.saveProfile = this.saveProfile.bind(this)
     }
 
     componentWillUnmount() {
@@ -192,21 +194,30 @@ export class Page extends React.Component{
         this.handleResize();
         window.addEventListener('resize', this.handleResize)
 
-        const time = cookies.get('updateTime');
+        const time = window.localStorage.getItem('updateTime');
 
         let url = this.state.host + `/api/couses/updatetime`
-        
-        if (!this.cookiesPrepared) {
+
+        if ('profileId' in document) {
+            console.log(document.profileId);
+            // fetch
+            let selectedCourses = JSON.parse(window.localStorage.getItem('courses')) || []//.forEach(c=>await this.restoreCourses(c))
+            let selectedMeetings = JSON.parse(window.localStorage.getItem('meetings')) || []
+            
+            await this.restoreCourses(selectedCourses)
+            this.resotreMeetings(selectedMeetings)
+            this.cookiesPrepared = true
+            } else if (!this.cookiesPrepared) {
             await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then(async (obj)=>{
                 const dbTime = obj.time
                 if (time != dbTime) {
                     // console.log('Cleared all old data');
-                    cookies.set('updateTime' , dbTime)
-                    cookies.set('courses', [])
-                    cookies.set('meetings', [])
+                    window.localStorage.setItem('courses', '[]')
+                    window.localStorage.setItem('meetings', '[]')
+                    window.localStorage.setItem('updateTime', dbTime)
                 } else {
-                    let selectedCourses = cookies.get('courses') || []//.forEach(c=>await this.restoreCourses(c))
-                    let selectedMeetings = cookies.get('meetings') || []
+                    let selectedCourses = JSON.parse(window.localStorage.getItem('courses')) || []//.forEach(c=>await this.restoreCourses(c))
+                    let selectedMeetings = JSON.parse(window.localStorage.getItem('meetings')) || []
                     
                     await this.restoreCourses(selectedCourses)
                     this.resotreMeetings(selectedMeetings)
@@ -244,10 +255,38 @@ export class Page extends React.Component{
         // console.log('Cookies updated');
     }
 
+    updateLocalStorage() {
+        if (!this.cookiesPrepared) return
+        window.localStorage.setItem('courses', JSON.stringify(this.state.selectedCourses.map(c=>c.courseName)))
+        window.localStorage.setItem('meetings', JSON.stringify(this.state.selectedMeetings))
+
+    }
+
+    saveProfile() {
+
+        var data = {
+            courses: JSON.stringify(this.state.selectedCourses.map(c=>c.courseName)),
+            meetings: JSON.stringify(this.state.selectedMeetings)
+        }
+        fetch('http://localhost:8080/api/save', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(data)
+        }).then(res => {
+            return res.json();
+        }).then(d=>{
+            console.log(d)
+        });
+    }
+
     componentDidUpdate() {
         document.selectedCourses = this.state.selectedCourses
         document.selectedMeetings = this.state.selectedMeetings
-        this.updateCookies()
+        // this.updateCookies()
+        this.updateLocalStorage()
     }
 
     changeTimetableRange(range) {
@@ -357,7 +396,8 @@ export class Page extends React.Component{
                             removeMeeting = {this.removeMeeting}
                             selectedMeetings={this.state.selectedMeetings}
                             host={this.state.host}
-                            displayMode={this.state.displayMode}/>
+                            displayMode={this.state.displayMode}
+                            saveProfile={this.saveProfile}/>
                     </div>
                 )
             }
