@@ -147,14 +147,17 @@ export class Page extends React.Component{
             selectedMeetings: [],
             timetableRange: 'Fall',
             highlightCourse: '',
-            host: 'http://yucanwu.com:3000',
+            apihost: 'http://localhost:3001',
+            localhost: 'http://localhost:3000',
+            // apihost: 'http://yucanwu.com:3000',
             displayMode: 'L',
             drawerOpen: false,
             typeColors:{
                 'LEC': getColor('lightblue', 600),
                 'TUT': getColor('amber', 600),
                 'PRA': getColor('pink', 600)
-            }
+            },
+            profileId: ''
         }
         this.colorList = []
         this.addCourse = this.addCourse.bind(this);
@@ -170,6 +173,8 @@ export class Page extends React.Component{
         this.handleResize = this.handleResize.bind(this)
         this.updateLocalStorage = this.updateLocalStorage.bind(this)
         this.saveProfile = this.saveProfile.bind(this)
+        this.findProfile = this.findProfile.bind(this)
+        document.findProfile = this.findProfile
     }
 
     componentWillUnmount() {
@@ -196,37 +201,37 @@ export class Page extends React.Component{
 
         const time = window.localStorage.getItem('updateTime');
 
-        let url = this.state.host + `/api/couses/updatetime`
+        let url = this.state.apihost + `/api/couses/updatetime`
 
-        if ('profileId' in document) {
-            console.log(document.profileId);
+        if ('profileId' in window) {
+            let data = await this.findProfile(window.profileId)
+            data = JSON.parse(data)
+            
             // fetch
-            let selectedCourses = JSON.parse(window.localStorage.getItem('courses')) || []//.forEach(c=>await this.restoreCourses(c))
-            let selectedMeetings = JSON.parse(window.localStorage.getItem('meetings')) || []
+            let selectedCourses = JSON.parse(data.courses) || []//.forEach(c=>await this.restoreCourses(c))
+            let selectedMeetings = JSON.parse(data.meetings) || []
             
             await this.restoreCourses(selectedCourses)
             this.resotreMeetings(selectedMeetings)
             this.cookiesPrepared = true
-            } else if (!this.cookiesPrepared) {
-            await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then(async (obj)=>{
-                const dbTime = obj.time
-                if (time != dbTime) {
-                    // console.log('Cleared all old data');
-                    window.localStorage.setItem('courses', '[]')
-                    window.localStorage.setItem('meetings', '[]')
-                    window.localStorage.setItem('updateTime', dbTime)
-                } else {
-                    let selectedCourses = JSON.parse(window.localStorage.getItem('courses')) || []//.forEach(c=>await this.restoreCourses(c))
-                    let selectedMeetings = JSON.parse(window.localStorage.getItem('meetings')) || []
-                    
-                    await this.restoreCourses(selectedCourses)
-                    this.resotreMeetings(selectedMeetings)
+        } else if (!this.cookiesPrepared) {
+        await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then(async (obj)=>{
+            const dbTime = obj.time
+            if (time != dbTime) {
+                window.localStorage.setItem('courses', '[]')
+                window.localStorage.setItem('meetings', '[]')
+                window.localStorage.setItem('updateTime', dbTime)
+            } else {
+                let selectedCourses = JSON.parse(window.localStorage.getItem('courses')) || []//.forEach(c=>await this.restoreCourses(c))
+                let selectedMeetings = JSON.parse(window.localStorage.getItem('meetings')) || []
+                
+                await this.restoreCourses(selectedCourses)
+                this.resotreMeetings(selectedMeetings)
 
-                    // console.log('Restored all old data');
-                    
-                }
-                this.cookiesPrepared = true
-            }).catch(err=>{console.error('Error',err)});
+                
+            }
+            this.cookiesPrepared = true
+        }).catch(err=>{console.error('Error',err)});
         }
     }
 
@@ -252,7 +257,6 @@ export class Page extends React.Component{
         cookies.set('courses', this.state.selectedCourses.map(c=>c.courseName))
         // cookies.set('meetings', this.state.selectedMeetings.map(m=>`${m.courseCode}:${m.meetingCode}:${m.meetingType}`))
         cookies.set('meetings', this.state.selectedMeetings)
-        // console.log('Cookies updated');
     }
 
     updateLocalStorage() {
@@ -262,24 +266,35 @@ export class Page extends React.Component{
 
     }
 
-    saveProfile() {
+    async findProfile(profileId) {
+        let res = await fetch (this.state.apihost + '/api/find' + `?profileId=${profileId}`,{
+            method: 'get'
+        })
+        
+        let d = await res.json()
+        return d.data
+    }
 
+    async saveProfile() {
         var data = {
             courses: JSON.stringify(this.state.selectedCourses.map(c=>c.courseName)),
             meetings: JSON.stringify(this.state.selectedMeetings)
         }
-        fetch('http://localhost:8080/api/save', {
+        
+        let res = await fetch(this.state.apihost + '/api/save', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: 'post',
             body: JSON.stringify(data)
-        }).then(res => {
-            return res.json();
-        }).then(d=>{
-            console.log(d)
-        });
+        })
+
+        let d = await res.json()
+        let profileId = d.id
+        this.setState({profileId})
+        
+        return d.id
     }
 
     componentDidUpdate() {
@@ -295,7 +310,7 @@ export class Page extends React.Component{
     }
 
     async loadDetail(courseCode) {
-        let url = this.state.host + `/API/courses?limit=1&code=${courseCode}&detail=1`
+        let url = this.state.apihost + `/API/courses?limit=1&code=${courseCode}&detail=1`
         let course = {}
         
         await fetch(url ,{mode:'cors'}).then((response)=>{return response.json()}).then((obj)=>{
@@ -395,9 +410,10 @@ export class Page extends React.Component{
                             addMeeting = {this.addMeeting}
                             removeMeeting = {this.removeMeeting}
                             selectedMeetings={this.state.selectedMeetings}
-                            host={this.state.host}
+                            apihost={this.state.apihost}
                             displayMode={this.state.displayMode}
-                            saveProfile={this.saveProfile}/>
+                            saveProfile={this.saveProfile}
+                            shareLink={`${this.state.localhost}profileId=${this.state.profileId}`}/>
                     </div>
                 )
             }
@@ -487,8 +503,10 @@ export class Page extends React.Component{
                                 addMeeting = {this.addMeeting}
                                 removeMeeting = {this.removeMeeting}
                                 selectedMeetings={this.state.selectedMeetings}
-                                host={this.state.host}
-                                displayMode={this.state.displayMode}/>
+                                apihost={this.state.apihost}
+                                displayMode={this.state.displayMode}
+                                saveProfile={this.saveProfile}
+                                shareLink={`${this.state.localhost}?profileId=${this.state.profileId}`}/>
                         </div>
                     </div>
                 </SwipeableDrawer>)

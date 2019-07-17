@@ -6,6 +6,7 @@ import $ from 'jquery';
 import {globalVar} from './global'
 import {ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button} from '@material-ui/core';
 import uniqid from 'uniqid'
+import SaveDoneDialog from './Dialogs';
 export class ControlPanel extends React.Component{
     constructor(props){
         super(props);
@@ -58,6 +59,8 @@ export class ControlPanel extends React.Component{
                         removeMeeting={this.props.removeMeeting}
                         selectedMeetings={this.props.selectedMeetings}/>);
                 }
+                console.log(this.props.shareLink);
+                
                 displayInfo = 
                     <div className = "d-flex flex-column">
                         <div className = "cart-title mx-2 mb-3 border-bottom ">
@@ -70,6 +73,12 @@ export class ControlPanel extends React.Component{
                                 </div>
                             }
                             <hr />
+                            <div className="row justify-content-center" >
+                                <SaveDoneDialog 
+                                    className='col-4' 
+                                    saveProfile={this.props.saveProfile}
+                                    link={this.props.shareLink}></SaveDoneDialog>
+                            </div>
                             {/* <div className = "d-flex flex-row mb-3 course-pill theme-primary-action pill"> */}
                                 {/* <i className="fas fa-calendar-plus mr-2 my-auto ml-auto"></i> */}
                                 {/* <div className = "my-auto mr-auto">Autofill schedule (not yet available)</div>   */}
@@ -119,7 +128,6 @@ export class ControlPanel extends React.Component{
                      <div className = "d-flex px-3 pill-right cart-number theme-primary-action" onClick = {()=>{this.setState({display:'cart'})}}><i className = "fas fa-shopping-cart my-auto ml-auto mr-1"/><div className = "my-auto mr-auto">{this.props.selectedCourses.length}</div></div>
                     </div>
                 {displayInfo}
-                <Button variant='outlined' onClick={this.props.saveProfile}>Save</Button>
             </div>
         )
     }

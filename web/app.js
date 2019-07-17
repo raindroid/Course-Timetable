@@ -50,7 +50,8 @@ var profileSchema = new mongoose.Schema({
 var Profile = mongoose.model('profile', profileSchema)
 
 app.get("/", (req, res)=>{
-	res.render("index");
+	let {profileId} = req.query
+	res.render("index", {profileId: profileId});
 });
 
 // API test page
@@ -132,25 +133,40 @@ app.get('/api/courses', async (req, res)=>{
 
 app.post('/api/save', (req, res) => {
 	let {selectedCourses, selectedMeetings} = req.body
-	console.log('Save req received');
-	let uniqid = uniqId.time()
+	let profileId = uniqId.time()
 	var ip = req.headers['x-forwarded-for'] || 
      req.connection.remoteAddress || 
      req.socket.remoteAddress ||
      (req.connection.socket ? req.connection.socket.remoteAddress : null);
+	 console.log(`Save req received profileId=${profileId} ip=${ip}`);
 	
 	Profile.updateOne(
-		{id: uniqid}, 
-		{id: uniqid, data: JSON.stringify(req.body), ip: ip}, 
+		{id: profileId}, 
+		{id: profileId, data: JSON.stringify(req.body), ip: ip}, 
 		{upsert: true, setDefaultsOnInsert: true}, 
 		e=>{
-			console.log(uniqid);
-			res.send({id: uniqid})
+			console.log(profileId);
+			res.send({id: profileId})
 		});
 })
 
-app.post('/api/profile', (req, res)=>{
-	let {profileid} = req.body
+app.get('/api/find', (req, res)=>{
+	let {profileId} = req.query
+	console.log(req.query);
+	
+	var ip = req.headers['x-forwarded-for'] || 
+     req.connection.remoteAddress || 
+     req.socket.remoteAddress ||
+     (req.connection.socket ? req.connection.socket.remoteAddress : null);
+	 console.log(`Find req received profileId=${profileId} ip=${ip}`);
+
+	 Profile.findOne(
+		{id: profileId}, 
+		{_id: 0}, 
+		(e, p)=>{
+			console.log(p)
+			res.send(p)	
+		})
 })
 
 
