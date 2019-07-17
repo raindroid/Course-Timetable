@@ -203,7 +203,7 @@ export class Page extends React.Component{
 
         let url = this.state.apihost + `/api/couses/updatetime`
 
-        if ('profileId' in window) {
+        if ('profileId' in window && window.profileId) {
             let data = await this.findProfile(window.profileId)
             data = JSON.parse(data)
             
