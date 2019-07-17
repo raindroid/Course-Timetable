@@ -17,6 +17,7 @@ export class ControlPanel extends React.Component{
         }
         this.handleInput = this.handleInput.bind(this);
         this.fetchSearchResult = this.fetchSearchResult.bind(this);
+        window.globalVar = globalVar
     }
     handleInput(event){
         this.setState({searchInput: event.target.value});
@@ -32,7 +33,9 @@ export class ControlPanel extends React.Component{
             // if the result exists in cache, use cached value
         }
         else{
-            await fetch(this.props.host + `/API/courses?limit=10&code=${input}&detail=1&limit=10`,{mode:'cors'}).then((response)=>{return response.json()}).then((obj)=>{
+            console.log(this.props.apihost + `/API/courses?limit=10&code=${input}&detail=1&limit=10`);
+            
+            await fetch(this.props.apihost + `/API/courses?limit=10&code=${input}&detail=1&limit=10`,{mode:'cors'}).then((response)=>{return response.json()}).then((obj)=>{
                 globalVar.searchCache[input] = obj;
             }).catch(err=>{console.error('Error',err)});
             if (this.state.searchInput == input && this.state.display == 'loading'){
@@ -87,9 +90,14 @@ export class ControlPanel extends React.Component{
                     </div>;
                 break;
             case 'search':
+                if (this.state.searchInput && globalVar.searchCache && globalVar.searchCache[this.state.searchInput]){
+                    window.debugInfo = {}
+                    window.debugInfo.searchInput = this.state.searchInput
+                    window.debugInfo.searchCache = globalVar.searchCache
                     for (let courseObj of globalVar.searchCache[this.state.searchInput]){
                         courseList.push(<CoursePill position = 'search' courseCode = {courseObj.courseName} key = {courseObj.courseName + "-searchPill"} selectedCourses = {this.props.selectedCourses} courseObj = {courseObj} addCourse = {this.props.addCourse} detail={courseObj}/>);
                     }
+                }
                     displayInfo = 
                     <div className = "d-flex flex-column">
                         <div className = "">

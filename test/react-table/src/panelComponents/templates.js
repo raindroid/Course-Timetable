@@ -413,7 +413,7 @@ export class Page extends React.Component{
                             apihost={this.state.apihost}
                             displayMode={this.state.displayMode}
                             saveProfile={this.saveProfile}
-                            shareLink={`${this.state.localhost}profileId=${this.state.profileId}`}/>
+                            shareLink={this.state.localhost+`?profileId=${this.state.profileId}`}/>
                     </div>
                 )
             }
@@ -506,7 +506,7 @@ export class Page extends React.Component{
                                 apihost={this.state.apihost}
                                 displayMode={this.state.displayMode}
                                 saveProfile={this.saveProfile}
-                                shareLink={`${this.state.localhost}?profileId=${this.state.profileId}`}/>
+                                shareLink={this.state.localhost + `?profileId=${this.state.profileId}`}/>
                         </div>
                     </div>
                 </SwipeableDrawer>)
